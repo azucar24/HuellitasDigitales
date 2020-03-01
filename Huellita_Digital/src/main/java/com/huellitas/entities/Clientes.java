@@ -16,18 +16,18 @@ public class Clientes {
 	private String clienteNombre;
 	
 	@Column(name="cliente_correo", length=50, unique = false)
-	private String cliente_correo;
+	private String clienteCorreo;
 	
 	@Column(name="cliente_user", length=15, unique = false)
-	private String cliente_user;
+	private String clienteUser;
 	
 	@Column(name="cliente_clave", length=15, unique = false)
-	private String cliente_clave;
+	private String clienteClave;
 	
 	@Column(name="cliente_telefono", length=8, unique = false)
-	private int cliente_telefono;
+	private int clienteTelefono;
 	
 	@Column(name="cliente_sexo", length=1, unique = false)
-	private char cliente_sexo;
+	private char clienteSexo;
 	
 }
