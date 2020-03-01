@@ -13,7 +13,7 @@ public class Clientes {
 	private int id;
 	
 	@Column(name="cliente_nombre", length=50, unique = false)
-	private String cliente_nombre;
+	private String clienteNombre;
 	
 	@Column(name="cliente_correo", length=50, unique = false)
 	private String cliente_correo;
