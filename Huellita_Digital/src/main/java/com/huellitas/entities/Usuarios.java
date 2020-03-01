@@ -22,15 +22,15 @@ public class Usuarios {
 	private String usuarioUser;
 	
 	@Column(name="usuario_clave", length=15, unique = false)
-	private String usuario_clave;
+	private String usuarioClave;
 	
 	@Column(name="usuario_telefono", length=8, unique = false)
-	private int usuario_telefono;
+	private int usuarioTelefono;
 	
 	@Column(name="usuario_sexo", length=1, unique = false)
-	private char usuario_sexo;
+	private char usuarioSexo;
 	
 	@Column(name="usuario_rol", length=8, unique = false)
-	private String usuario_rol;
+	private String usuarioRol;
 	
 }
