@@ -16,10 +16,10 @@ public class Usuarios {
 	private String usuarioNombre;
 	
 	@Column(name="usuario_correo", length=50, unique = false)
-	private String usuario_correo;
+	private String usuarioCorreo;
 	
 	@Column(name="usuario_user", length=15, unique = false)
-	private String usuario_user;
+	private String usuarioUser;
 	
 	@Column(name="usuario_clave", length=15, unique = false)
 	private String usuario_clave;
