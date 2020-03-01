@@ -13,7 +13,7 @@ public class Usuarios {
 	private int id;
 	
 	@Column(name="usuario_nombre", length=50, unique = false)
-	private String usuario_nombre;
+	private String usuarioNombre;
 	
 	@Column(name="usuario_correo", length=50, unique = false)
 	private String usuario_correo;
