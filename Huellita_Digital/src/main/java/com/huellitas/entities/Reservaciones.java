@@ -14,7 +14,7 @@ public class Reservaciones {
 	
 	@Column(name="reservacion_nombre_resp", length=50, unique = false)
 	private String reservacionNombreResp;
-	
+
 	@Column(name="reservacion_fecha", length=10, unique = false)
 	private String reservacionFecha;
 	
