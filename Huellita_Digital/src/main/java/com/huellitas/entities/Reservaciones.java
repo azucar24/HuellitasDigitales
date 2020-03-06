@@ -10,7 +10,7 @@ public class Reservaciones {
 	/*Campos de tabla*/
 	
 	@Column(name="id", unique=true, length=11)
-	private int id;
+	private Long id;
 	
 	@Column(name="reservacion_nombre_resp", length=50, unique = false)
 	private String reservacionNombreResp;

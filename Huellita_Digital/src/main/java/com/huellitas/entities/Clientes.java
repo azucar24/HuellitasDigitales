@@ -10,7 +10,7 @@ public class Clientes {
 	/*Campos*/
 	
 	@Column(name="id", unique=true, length=11)
-	private int id;
+	private Long id;
 	
 	@Column(name="cliente_nombre", length=50, unique = false)
 	private String clienteNombre;

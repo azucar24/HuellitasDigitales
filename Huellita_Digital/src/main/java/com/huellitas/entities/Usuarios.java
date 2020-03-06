@@ -10,7 +10,7 @@ public class Usuarios {
 	/*todos los atributos de la tabla como campos van aca.*/
 	
 	@Column(name="id", unique=true, length=11)
-	private int id;
+	private Long id;
 	
 	@Column(name="usuario_nombre", length=50, unique = false)
 	private String usuarioNombre;
