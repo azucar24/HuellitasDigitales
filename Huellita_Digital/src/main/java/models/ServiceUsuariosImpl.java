@@ -15,26 +15,22 @@ public class ServiceUsuariosImpl implements ServiceUsuarios{
 
 	@Override
 	public List<Usuarios> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Usuarios>) repository.findAll();
 	}
 
 	@Override
 	public Usuarios save(Usuarios entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.save(entity);
 	}
 
 	@Override
 	public Optional<Usuarios> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id);
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		repository.deleteById(id);
 	}
 	
 	
