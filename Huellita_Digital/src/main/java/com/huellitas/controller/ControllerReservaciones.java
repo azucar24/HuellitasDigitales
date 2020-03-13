@@ -1,4 +1,4 @@
-package controller;
+package com.huellitas.controller;
 
 public class ControllerReservaciones {
 
