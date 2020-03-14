@@ -30,8 +30,8 @@ public class ControllerUsuarios {
 	
 	/*=================================== AGREGAR ===============================================*/
 	@RequestMapping(value="/usuarios", method = RequestMethod.POST)
-	public Usuarios guardar(@RequestBody Usuarios creditLine){
-	Usuarios NewUsuario = ServiceUsuarios.save(creditLine);
+	public Usuarios guardar(@RequestBody Usuarios usuarios){
+	Usuarios NewUsuario = ServiceUsuarios.save(usuarios);
 	return NewUsuario;
 	}
 	
