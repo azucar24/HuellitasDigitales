@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.huellitas.entities.Clientes;
 
+
 @RestController
 @RequestMapping("huellitas/clientes")
 public class ControllerClientes {
@@ -20,22 +21,22 @@ public class ControllerClientes {
 	
 	@RequestMapping(value="/clientes", method = RequestMethod.GET)
 		public List<Clientes> obtenerListas(){
-		List<Clientes> nombreObjeto = ServiceClientes.findAll();
-		return nombreObjeto;
+		List<Clientes> ClienteID = ServiceClientes.findAll();
+		return ClienteID;
 	}
 	
 	/*================================== BUSCAR POR ID ============================================*/
 	@RequestMapping(value="/clientes/{id}", method = RequestMethod.GET)
 	public Clientes obtenerPorId(@PathVariable("id") Long id){
-		java.util.Optional<Clientes> nombreObjeto = ServiceClientes.findById(id);
-		return nombreObjeto.get();
+		java.util.Optional<Clientes> ClienteID = ServiceClientes.findById(id);
+		return ClienteID.get();
 	}
 	
 	/*=================================== AGREGAR ===============================================*/
 	@RequestMapping(value="/clientes", method = RequestMethod.POST)
 		public Clientes guardar(@RequestBody Clientes creditLine){
-		Clientes objeto = ServiceClientes.save(creditLine);
-		return objeto;
+		Clientes NewCliente = ServiceClientes.save(creditLine);
+		return NewCliente;
 	}
 	
 	/*================================== ELIMINAR ===============================================*/
