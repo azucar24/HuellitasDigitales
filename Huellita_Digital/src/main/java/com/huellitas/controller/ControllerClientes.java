@@ -33,8 +33,8 @@ public class ControllerClientes {
 	
 	/*=================================== AGREGAR ===============================================*/
 	@RequestMapping(value="/clientes", method = RequestMethod.POST)
-		public Clientes guardar(@RequestBody Clientes creditLine){
-		Clientes objeto = ServiceClientes.save(creditLine);
+		public Clientes guardar(@RequestBody Clientes clientes){
+		Clientes objeto = ServiceClientes.save(clientes);
 		return objeto;
 	}
 	
