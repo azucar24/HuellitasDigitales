@@ -1,4 +1,4 @@
-package com.huellitas.controller;
+package com.huellitas.demo.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huellitas.entities.Reservaciones;
-import com.huellitas.models.services.ServiceReservaciones;
+import com.huellitas.demo.entities.Reservaciones;
+import com.huellitas.demo.models.services.ServiceReservaciones;
 
 @RestController
 @RequestMapping("/huellitas")
@@ -17,7 +17,7 @@ public class ControllerReservaciones {
 	private ServiceReservaciones ServiceReservaciones;
 	
 	/*================================== BUSCAR TODOS =============================================*/
-	@RequestMapping(value="/reservaciones", method = RequestMethod.GET)
+	@RequestMapping(value="/reservaciones-all", method = RequestMethod.GET)
 		public List<Reservaciones> obtenerListas(){
 		List<Reservaciones> ReservacionesID = ServiceReservaciones.findAll();
 		return ReservacionesID;
@@ -31,14 +31,14 @@ public class ControllerReservaciones {
 	}
 	
 	/*=================================== AGREGAR ===============================================*/
-	@RequestMapping(value="/reservaciones", method = RequestMethod.POST)
+	@RequestMapping(value="/reservaciones-add", method = RequestMethod.POST)
 	public Reservaciones guardar(@RequestBody Reservaciones reservaciones){
 	Reservaciones NewReservacion = ServiceReservaciones.save(reservaciones);
 	return NewReservacion;
 	}
 	
 	/*================================== ELIMINAR ===============================================*/
-	@RequestMapping(value="/reservaciones/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/reservaciones-delete/{id}", method = RequestMethod.GET)
 		public void delete(@PathVariable("id") Long id){
 		ServiceReservaciones.delete(id);
 	}

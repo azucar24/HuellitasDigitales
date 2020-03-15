@@ -1,9 +1,9 @@
-package com.huellitas.models.repositorys;
+package com.huellitas.demo.models.repositorys;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.huellitas.entities.Usuarios;
+import com.huellitas.demo.entities.Usuarios;
 
 @Repository
 public interface repositoryUsuarios extends CrudRepository<Usuarios, Long> {

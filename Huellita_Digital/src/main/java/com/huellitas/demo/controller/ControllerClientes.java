@@ -1,4 +1,4 @@
-package com.huellitas.controller;
+package com.huellitas.demo.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huellitas.entities.Clientes;
-import com.huellitas.models.services.ServiceClientes;
+import com.huellitas.demo.entities.Clientes;
+import com.huellitas.demo.models.services.ServiceClientes;
+
 @RestController
 @RequestMapping("/huellitas")
 public class ControllerClientes {
@@ -19,7 +20,7 @@ public class ControllerClientes {
 	private ServiceClientes ServiceClientes;
 	
 	/*================================== BUSCAR TODOS =============================================*/
-	@RequestMapping(value="/clientes", method = RequestMethod.GET)
+	@RequestMapping(value="/clientes-all", method = RequestMethod.GET)
 		public List<Clientes> obtenerListas(){
 		List<Clientes> ClientesID = ServiceClientes.findAll();
 		return ClientesID;
@@ -33,14 +34,14 @@ public class ControllerClientes {
 	}
 	
 	/*=================================== AGREGAR ===============================================*/
-	@RequestMapping(value="/clientes", method = RequestMethod.POST)
+	@RequestMapping(value="/clientes-add", method = RequestMethod.POST)
 	public Clientes guardar(@RequestBody Clientes clientes){
 		Clientes NewUsuario = ServiceClientes.save(clientes);
 		return NewUsuario;
 	}
 	
 	/*================================== ELIMINAR ===============================================*/
-	@RequestMapping(value="/clientes/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/clientes-delete/{id}", method = RequestMethod.GET)
 		public void delete(@PathVariable("id") Long id){
 		ServiceClientes.delete(id);
 	}

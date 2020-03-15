@@ -1,4 +1,4 @@
-package com.huellitas.entities;
+package com.huellitas.demo.entities;
 
 import java.io.Serializable;
 

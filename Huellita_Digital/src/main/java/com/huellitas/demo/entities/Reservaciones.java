@@ -1,4 +1,4 @@
-package com.huellitas.entities;
+package com.huellitas.demo.entities;
 
 import java.io.Serializable;
 
@@ -43,7 +43,7 @@ public class Reservaciones implements Serializable{
 	private int reservacionIdCliente;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "reservacion_id_cliente", nullable=false)
+	@JoinColumn(name = "reservacion_id_cliente", insertable=false, updatable=false)
 	private Clientes cliente;
 
 }

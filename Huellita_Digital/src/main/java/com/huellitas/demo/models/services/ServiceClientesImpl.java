@@ -1,4 +1,4 @@
-package com.huellitas.models.services;
+package com.huellitas.demo.models.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.huellitas.entities.Clientes;
-import com.huellitas.entities.Usuarios;
-import com.huellitas.models.repositorys.repositoryClientes;
+import com.huellitas.demo.entities.Clientes;
+import com.huellitas.demo.entities.Usuarios;
+import com.huellitas.demo.models.repositorys.repositoryClientes;
 
 @Service
 public class ServiceClientesImpl implements ServiceClientes{

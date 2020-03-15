@@ -1,12 +1,12 @@
-package com.huellitas.models.services;
+package com.huellitas.demo.models.services;
 
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.huellitas.entities.Usuarios;
-import com.huellitas.models.repositorys.repositoryUsuarios;
+import com.huellitas.demo.entities.Usuarios;
+import com.huellitas.demo.models.repositorys.repositoryUsuarios;
 
 @Service
 public class ServiceUsuariosImpl implements ServiceUsuarios{

@@ -1,9 +1,9 @@
-package com.huellitas.models.services;
+package com.huellitas.demo.models.services;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.huellitas.entities.Clientes;
+import com.huellitas.demo.entities.Clientes;
 
 public interface ServiceClientes {
 	public List<Clientes> findAll();

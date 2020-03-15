@@ -1,9 +1,9 @@
-package com.huellitas.models.services;
+package com.huellitas.demo.models.services;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.huellitas.entities.Usuarios;
+import com.huellitas.demo.entities.Usuarios;
 
 public interface ServiceUsuarios {
 	public List<Usuarios> findAll();

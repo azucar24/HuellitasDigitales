@@ -1,4 +1,4 @@
-package com.huellitas.controller;
+package com.huellitas.demo.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huellitas.entities.Usuarios;
-import com.huellitas.models.services.ServiceUsuarios;
+import com.huellitas.demo.entities.Usuarios;
+import com.huellitas.demo.models.services.ServiceUsuarios;
 
 @RestController
 @RequestMapping("/huellitas")
@@ -18,7 +18,7 @@ public class ControllerUsuarios {
 	private ServiceUsuarios ServiceUsuarios;
 	
 	/*================================== BUSCAR TODOS =============================================*/
-	@RequestMapping(value="/usuarios", method = RequestMethod.GET)
+	@RequestMapping(value="/usuarios-all", method = RequestMethod.GET)
 		public List<Usuarios> obtenerListas(){
 		List<Usuarios> UsuariosID = ServiceUsuarios.findAll();
 		return UsuariosID;
@@ -32,14 +32,14 @@ public class ControllerUsuarios {
 	}
 	
 	/*=================================== AGREGAR ===============================================*/
-	@RequestMapping(value="/usuarios", method = RequestMethod.POST)
+	@RequestMapping(value="/usuarios-add", method = RequestMethod.POST)
 	public Usuarios guardar(@RequestBody Usuarios usuarios){
 	Usuarios NewUsuario = ServiceUsuarios.save(usuarios);
 	return NewUsuario;
 	}
 	
 	/*================================== ELIMINAR ===============================================*/
-	@RequestMapping(value="/usuarios/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/usuarios-delete/{id}", method = RequestMethod.GET)
 		public void delete(@PathVariable("id") Long id){
 		ServiceUsuarios.delete(id);
 	}

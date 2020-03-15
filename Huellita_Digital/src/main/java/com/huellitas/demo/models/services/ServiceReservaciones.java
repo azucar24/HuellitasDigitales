@@ -1,9 +1,9 @@
-package com.huellitas.models.services;
+package com.huellitas.demo.models.services;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.huellitas.entities.Reservaciones;
+import com.huellitas.demo.entities.Reservaciones;
 
 public interface ServiceReservaciones {
 	public List<Reservaciones> findAll();
