@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huellitas.entities.Reservaciones;
-@RestController
-@RequestMapping("huellitas/reservaciones")
+import com.huellitas.models.services.ServiceReservaciones;
 
+@RestController
+@RequestMapping("/huellitas")
 public class ControllerReservaciones {
 	@Autowired
-	private com.huellitas.models.services.ServiceReservaciones ServiceReservaciones;
+	private ServiceReservaciones ServiceReservaciones;
 	
 	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/reservaciones", method = RequestMethod.GET)
