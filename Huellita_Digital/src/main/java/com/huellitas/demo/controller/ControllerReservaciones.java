@@ -11,34 +11,34 @@ import com.huellitas.demo.entities.Reservaciones;
 import com.huellitas.demo.models.services.ServiceReservaciones;
 
 @RestController
-@RequestMapping("/huellitas")
+@RequestMapping("/huellitas/reservaciones")
 public class ControllerReservaciones {
 	@Autowired
 	private ServiceReservaciones ServiceReservaciones;
 	
 	/*================================== BUSCAR TODOS =============================================*/
-	@RequestMapping(value="/reservaciones-all", method = RequestMethod.GET)
+	@RequestMapping(value="", method = RequestMethod.GET)
 		public List<Reservaciones> obtenerListas(){
 		List<Reservaciones> ReservacionesID = ServiceReservaciones.findAll();
 		return ReservacionesID;
 	}
 	
 	/*================================== BUSCAR POR ID ============================================*/
-	@RequestMapping(value="/reservaciones/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public Reservaciones obtenerPorId(@PathVariable("id") Long id){
 		java.util.Optional<Reservaciones> ReservacionesID = ServiceReservaciones.findById(id);
 		return ReservacionesID.get();
 	}
 	
 	/*=================================== AGREGAR ===============================================*/
-	@RequestMapping(value="/reservaciones-add", method = RequestMethod.POST)
+	@RequestMapping(value="", method = RequestMethod.POST)
 	public Reservaciones guardar(@RequestBody Reservaciones reservaciones){
 	Reservaciones NewReservacion = ServiceReservaciones.save(reservaciones);
 	return NewReservacion;
 	}
 	
 	/*================================== ELIMINAR ===============================================*/
-	@RequestMapping(value="/reservaciones-delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
 		public void delete(@PathVariable("id") Long id){
 		ServiceReservaciones.delete(id);
 	}
