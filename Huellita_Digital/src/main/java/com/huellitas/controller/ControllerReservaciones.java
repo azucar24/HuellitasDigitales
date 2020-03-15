@@ -13,7 +13,7 @@ import com.huellitas.entities.Reservaciones;
 
 public class ControllerReservaciones {
 	@Autowired
-	private com.huellitas.models.ServiceReservaciones ServiceReservaciones;
+	private com.huellitas.models.services.ServiceReservaciones ServiceReservaciones;
 	
 	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/reservaciones", method = RequestMethod.GET)

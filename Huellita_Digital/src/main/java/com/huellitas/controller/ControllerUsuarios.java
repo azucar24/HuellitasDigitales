@@ -13,7 +13,7 @@ import com.huellitas.entities.Usuarios;
 
 public class ControllerUsuarios {
 	@Autowired
-	private com.huellitas.models.ServiceUsuarios ServiceUsuarios;
+	private com.huellitas.models.services.ServiceUsuarios ServiceUsuarios;
 	
 	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/usuarios", method = RequestMethod.GET)

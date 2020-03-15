@@ -1,30 +1,33 @@
-package com.huellitas.models;
+package com.huellitas.models.services;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.huellitas.entities.Clientes;
 import com.huellitas.entities.Usuarios;
+import com.huellitas.models.repositorys.repositoryClientes;
 
 @Service
-public class ServiceUsuariosImpl implements ServiceUsuarios{
+public class ServiceClientesImpl implements ServiceClientes{
 
 	@Autowired
-	public repositoryUsuarios repository;
+	public repositoryClientes repository;
 
 	@Override
-	public List<Usuarios> findAll() {
-		return (List<Usuarios>) repository.findAll();
+	public List<Clientes> findAll() {
+		return (List<Clientes>) repository.findAll();
 	}
 
 	@Override
-	public Usuarios save(Usuarios entity) {
+	public Clientes save(Clientes entity) {
 		return repository.save(entity);
 	}
 
 	@Override
-	public Optional<Usuarios> findById(Long id) {
+	public Optional<Clientes> findById(Long id) {
 		return repository.findById(id);
 	}
 
@@ -33,6 +36,4 @@ public class ServiceUsuariosImpl implements ServiceUsuarios{
 		repository.deleteById(id);
 	}
 	
-	
-
 }

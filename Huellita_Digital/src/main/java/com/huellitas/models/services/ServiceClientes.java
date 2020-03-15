@@ -1,4 +1,4 @@
-package com.huellitas.models;
+package com.huellitas.models.services;
 
 import java.util.List;
 import java.util.Optional;

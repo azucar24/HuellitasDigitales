@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huellitas.entities.Clientes;
-
-
+import com.huellitas.models.services.ServiceClientes;
 @RestController
 @RequestMapping("/huellitas")
 public class ControllerClientes {
 	@Autowired
-	private com.huellitas.models.ServiceClientes ServiceClientes;
+	private com.huellitas.models.services.ServiceClientes ServiceClientes;
 	
 	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/clientes", method = RequestMethod.GET)

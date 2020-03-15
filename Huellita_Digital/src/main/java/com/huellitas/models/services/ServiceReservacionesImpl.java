@@ -1,4 +1,4 @@
-package com.huellitas.models;
+package com.huellitas.models.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.huellitas.entities.Clientes;
 import com.huellitas.entities.Reservaciones;
+import com.huellitas.models.repositorys.repositoryReservaciones;
 
 @Service
 public class ServiceReservacionesImpl implements ServiceReservaciones{

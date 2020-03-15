@@ -1,4 +1,4 @@
-package com.huellitas.models;
+package com.huellitas.models.repositorys;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
