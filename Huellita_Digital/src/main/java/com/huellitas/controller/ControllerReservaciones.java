@@ -30,8 +30,8 @@ public class ControllerReservaciones {
 	
 	/*=================================== AGREGAR ===============================================*/
 	@RequestMapping(value="/reservaciones", method = RequestMethod.POST)
-	public Reservaciones guardar(@RequestBody Reservaciones creditLine){
-	Reservaciones NewReservacion = ServiceReservaciones.save(creditLine);
+	public Reservaciones guardar(@RequestBody Reservaciones reservaciones){
+	Reservaciones NewReservacion = ServiceReservaciones.save(reservaciones);
 	return NewReservacion;
 	}
 	
