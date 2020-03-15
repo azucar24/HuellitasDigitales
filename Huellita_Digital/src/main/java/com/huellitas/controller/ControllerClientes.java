@@ -14,7 +14,7 @@ import com.huellitas.entities.Clientes;
 
 
 @RestController
-@RequestMapping("huellitas/clientes")
+@RequestMapping("/huellitas")
 public class ControllerClientes {
 	@Autowired
 	private com.huellitas.models.ServiceClientes ServiceClientes;
