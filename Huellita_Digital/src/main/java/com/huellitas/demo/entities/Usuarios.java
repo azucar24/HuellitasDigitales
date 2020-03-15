@@ -41,5 +41,71 @@ public class Usuarios implements Serializable{
 	
 	@Column(name="usuario_rol", length=8)
 	private String usuarioRol;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUsuarioNombre() {
+		return usuarioNombre;
+	}
+
+	public void setUsuarioNombre(String usuarioNombre) {
+		this.usuarioNombre = usuarioNombre;
+	}
+
+	public String getUsuarioCorreo() {
+		return usuarioCorreo;
+	}
+
+	public void setUsuarioCorreo(String usuarioCorreo) {
+		this.usuarioCorreo = usuarioCorreo;
+	}
+
+	public String getUsuarioUser() {
+		return usuarioUser;
+	}
+
+	public void setUsuarioUser(String usuarioUser) {
+		this.usuarioUser = usuarioUser;
+	}
+
+	public String getUsuarioClave() {
+		return usuarioClave;
+	}
+
+	public void setUsuarioClave(String usuarioClave) {
+		this.usuarioClave = usuarioClave;
+	}
+
+	public int getUsuarioTelefono() {
+		return usuarioTelefono;
+	}
+
+	public void setUsuarioTelefono(int usuarioTelefono) {
+		this.usuarioTelefono = usuarioTelefono;
+	}
+
+	public char getUsuarioSexo() {
+		return usuarioSexo;
+	}
+
+	public void setUsuarioSexo(char usuarioSexo) {
+		this.usuarioSexo = usuarioSexo;
+	}
+
+	public String getUsuarioRol() {
+		return usuarioRol;
+	}
+
+	public void setUsuarioRol(String usuarioRol) {
+		this.usuarioRol = usuarioRol;
+	}
+	
+	
 	
 }

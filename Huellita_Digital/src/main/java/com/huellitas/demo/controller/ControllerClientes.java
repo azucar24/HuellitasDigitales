@@ -14,34 +14,34 @@ import com.huellitas.demo.entities.Clientes;
 import com.huellitas.demo.models.services.ServiceClientes;
 
 @RestController
-@RequestMapping("/huellitas")
+@RequestMapping("/huellitas/clientes")
 public class ControllerClientes {
 	@Autowired
 	private ServiceClientes ServiceClientes;
 	
 	/*================================== BUSCAR TODOS =============================================*/
-	@RequestMapping(value="/clientes-all", method = RequestMethod.GET)
+	@RequestMapping(value="", method = RequestMethod.GET)
 		public List<Clientes> obtenerListas(){
 		List<Clientes> ClientesID = ServiceClientes.findAll();
 		return ClientesID;
 	}
 	
 	/*================================== BUSCAR POR ID ============================================*/
-	@RequestMapping(value="/clientes/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public Clientes obtenerPorId(@PathVariable("id") Long id){
 		Optional<Clientes> ClientesID = ServiceClientes.findById(id);
 		return ClientesID.get();
 	}
 	
 	/*=================================== AGREGAR ===============================================*/
-	@RequestMapping(value="/clientes-add", method = RequestMethod.POST)
+	@RequestMapping(value="", method = RequestMethod.POST)
 	public Clientes guardar(@RequestBody Clientes clientes){
 		Clientes NewUsuario = ServiceClientes.save(clientes);
 		return NewUsuario;
 	}
 	
 	/*================================== ELIMINAR ===============================================*/
-	@RequestMapping(value="/clientes-delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
 		public void delete(@PathVariable("id") Long id){
 		ServiceClientes.delete(id);
 	}

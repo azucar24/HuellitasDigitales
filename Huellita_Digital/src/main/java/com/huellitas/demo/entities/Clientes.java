@@ -40,5 +40,63 @@ public class Clientes implements Serializable{
 	
 	@Column(name="cliente_sexo", length=1)
 	private char clienteSexo;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getClienteNombre() {
+		return clienteNombre;
+	}
+
+	public void setClienteNombre(String clienteNombre) {
+		this.clienteNombre = clienteNombre;
+	}
+
+	public String getClienteCorreo() {
+		return clienteCorreo;
+	}
+
+	public void setClienteCorreo(String clienteCorreo) {
+		this.clienteCorreo = clienteCorreo;
+	}
+
+	public String getClienteUser() {
+		return clienteUser;
+	}
+
+	public void setClienteUser(String clienteUser) {
+		this.clienteUser = clienteUser;
+	}
+
+	public String getClienteClave() {
+		return clienteClave;
+	}
+
+	public void setClienteClave(String clienteClave) {
+		this.clienteClave = clienteClave;
+	}
+
+	public int getClienteTelefono() {
+		return clienteTelefono;
+	}
+
+	public void setClienteTelefono(int clienteTelefono) {
+		this.clienteTelefono = clienteTelefono;
+	}
+
+	public char getClienteSexo() {
+		return clienteSexo;
+	}
+
+	public void setClienteSexo(char clienteSexo) {
+		this.clienteSexo = clienteSexo;
+	}
+	
+	
 	
 }

@@ -46,4 +46,78 @@ public class Reservaciones implements Serializable{
 	@JoinColumn(name = "reservacion_id_cliente", insertable=false, updatable=false)
 	private Clientes cliente;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getReservacionNombreResp() {
+		return reservacionNombreResp;
+	}
+
+	public void setReservacionNombreResp(String reservacionNombreResp) {
+		this.reservacionNombreResp = reservacionNombreResp;
+	}
+
+	public String getReservacionFecha() {
+		return reservacionFecha;
+	}
+
+	public void setReservacionFecha(String reservacionFecha) {
+		this.reservacionFecha = reservacionFecha;
+	}
+
+	public String getReservacionHora() {
+		return reservacionHora;
+	}
+
+	public void setReservacionHora(String reservacionHora) {
+		this.reservacionHora = reservacionHora;
+	}
+
+	public int getReservacionTelefonoResp() {
+		return reservacionTelefonoResp;
+	}
+
+	public void setReservacionTelefonoResp(int reservacionTelefonoResp) {
+		this.reservacionTelefonoResp = reservacionTelefonoResp;
+	}
+
+	public int getReservacionCantPersonas() {
+		return reservacionCantPersonas;
+	}
+
+	public void setReservacionCantPersonas(int reservacionCantPersonas) {
+		this.reservacionCantPersonas = reservacionCantPersonas;
+	}
+
+	public char getReservacionEstado() {
+		return reservacionEstado;
+	}
+
+	public void setReservacionEstado(char reservacionEstado) {
+		this.reservacionEstado = reservacionEstado;
+	}
+
+	public int getReservacionIdCliente() {
+		return reservacionIdCliente;
+	}
+
+	public void setReservacionIdCliente(int reservacionIdCliente) {
+		this.reservacionIdCliente = reservacionIdCliente;
+	}
+
+	public Clientes getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Clientes cliente) {
+		this.cliente = cliente;
+	}
+	
+	
+
 }

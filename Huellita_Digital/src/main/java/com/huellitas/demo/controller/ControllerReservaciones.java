@@ -38,7 +38,7 @@ public class ControllerReservaciones {
 	}
 	
 	/*================================== ELIMINAR ===============================================*/
-	@RequestMapping(value="/reservaciones-delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/reservaciones-delete/{id}", method = RequestMethod.DELETE)
 		public void delete(@PathVariable("id") Long id){
 		ServiceReservaciones.delete(id);
 	}
