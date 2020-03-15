@@ -16,7 +16,7 @@ import com.huellitas.models.services.ServiceClientes;
 @RequestMapping("/huellitas")
 public class ControllerClientes {
 	@Autowired
-	private com.huellitas.models.services.ServiceClientes ServiceClientes;
+	private ServiceClientes ServiceClientes;
 	
 	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/clientes", method = RequestMethod.GET)
@@ -28,7 +28,7 @@ public class ControllerClientes {
 	/*================================== BUSCAR POR ID ============================================*/
 	@RequestMapping(value="/clientes/{id}", method = RequestMethod.GET)
 	public Clientes obtenerPorId(@PathVariable("id") Long id){
-		java.util.Optional<Clientes> ClientesID = ServiceClientes.findById(id);
+		Optional<Clientes> ClientesID = ServiceClientes.findById(id);
 		return ClientesID.get();
 	}
 	
