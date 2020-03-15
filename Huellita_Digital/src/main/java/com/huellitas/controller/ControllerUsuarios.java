@@ -15,6 +15,7 @@ public class ControllerUsuarios {
 	@Autowired
 	private com.huellitas.models.ServiceUsuarios ServiceUsuarios;
 	
+	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/usuarios", method = RequestMethod.GET)
 		public List<Usuarios> obtenerListas(){
 		List<Usuarios> UsuariosID = ServiceUsuarios.findAll();

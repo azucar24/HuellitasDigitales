@@ -19,6 +19,7 @@ public class ControllerClientes {
 	@Autowired
 	private com.huellitas.models.ServiceClientes ServiceClientes;
 	
+	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/clientes", method = RequestMethod.GET)
 		public List<Clientes> obtenerListas(){
 		List<Clientes> ClientesID = ServiceClientes.findAll();

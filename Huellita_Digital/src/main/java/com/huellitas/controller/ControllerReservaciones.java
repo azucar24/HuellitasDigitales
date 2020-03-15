@@ -15,6 +15,7 @@ public class ControllerReservaciones {
 	@Autowired
 	private com.huellitas.models.ServiceReservaciones ServiceReservaciones;
 	
+	/*================================== BUSCAR TODOS =============================================*/
 	@RequestMapping(value="/reservaciones", method = RequestMethod.GET)
 		public List<Reservaciones> obtenerListas(){
 		List<Reservaciones> ReservacionesID = ServiceReservaciones.findAll();
