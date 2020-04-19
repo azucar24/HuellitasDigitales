@@ -1,0 +1,10 @@
+{
+    "nombreApp" : "Componentes",
+    "rutas" : [
+        {
+            "ruta" : "useradd",
+            "icon" : "add_user",
+            "texto": "Nuevo usuario"
+        }
+    ]
+}
