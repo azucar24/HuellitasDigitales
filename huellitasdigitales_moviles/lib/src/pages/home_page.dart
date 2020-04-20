@@ -176,7 +176,7 @@ class UserAdd extends StatelessWidget{
         TextFormField(
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20),
-          keyboardType: TextInputType.multiline,
+          keyboardType: TextInputType.number,
           maxLines: 1,
           maxLength: 8,
           decoration: InputDecoration(
