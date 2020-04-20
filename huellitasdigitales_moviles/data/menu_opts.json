@@ -2,9 +2,10 @@
     "nombreApp" : "Componentes",
     "rutas" : [
         {
-            "ruta" : "useradd",
-            "icon" : "add_user",
-            "texto": "Nuevo usuario"
+            "ruta" : "PrincipalPage",
+            "icon" : "home",
+            "texto": "Pagina principal"
         }
+        
     ]
 }

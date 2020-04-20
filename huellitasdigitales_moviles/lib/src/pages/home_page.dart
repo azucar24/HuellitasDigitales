@@ -1,24 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
 
-import 'adduser.dart';
+String _user = "yonathan";
+String _password = "tu90mama";
 
 class HomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // do something
-            },
-          ),
-        ],
         title: Text("Huellita Digital, El Salvador"),
         backgroundColor: Colors.blueGrey,
       ),
@@ -69,13 +60,12 @@ Widget cajitas(){
         maxLength: 15,
         obscureText: true,
         decoration: InputDecoration(
-          icon: Icon(Icons.person),
+          icon: Icon(Icons.vpn_key),
           labelText: 'Ingresa tu contraseña',
         ),
       )
     ],
-  )
-    ;
+  );
 }
 
 Widget botones(BuildContext context) {
@@ -86,8 +76,11 @@ Widget botones(BuildContext context) {
         child: Text('Entrar', style: TextStyle(fontSize: 20),),
         color: Colors.cyan,
         onPressed: () {
-              // Navega a la segunda ruta cuando se pulsa.
-              
+          // Navega a la segunda ruta cuando se pulsa.
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PrincipalPage()),
+          );
         },
       ),
       SizedBox(width: 50),
@@ -110,17 +103,6 @@ class UserAdd extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // do something
-            },
-          ),
-        ],
         title: Text("Huellita Digital, El Salvador"),
         backgroundColor: Colors.blueGrey,
       ),
@@ -131,10 +113,8 @@ class UserAdd extends StatelessWidget{
             child: Column(
               children: <Widget>[
                 Image(image:AssetImage("assets/images/pp.jpg"), width:150,height:150),
-                Text("Estas en agregar nuevo usuario", style: TextStyle(fontSize: 35),),
-                FloatingActionButton( onPressed:(){
-                  Navigator.pop(context);
-                }, child: Icon(Icons.exit_to_app),),
+                Text("Registra tus datos", style: TextStyle(fontSize: 35),),
+                cajas()
               ],
             ) 
           )
@@ -142,5 +122,81 @@ class UserAdd extends StatelessWidget{
         )
     );
   }
-}
 
+  Widget cajas() {
+     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TextFormField(
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          maxLength: 50,
+          decoration: InputDecoration(
+            icon: Icon(Icons.person),
+            labelText: 'Nombre completo',
+          ),
+        ),
+        SizedBox(width: 50),
+        TextFormField(
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          maxLength: 25,
+          decoration: InputDecoration(
+            icon: Icon(Icons.mail),
+            labelText: 'Correo electronico',
+          ),
+        ),
+        TextFormField(
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          maxLength: 15,
+          decoration: InputDecoration(
+            icon: Icon(Icons.verified_user),
+            labelText: 'Nombre de usuario',
+          ),
+        ),
+        TextFormField(
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          maxLength: 15,
+          obscureText: true,
+          decoration: InputDecoration(
+            icon: Icon(Icons.vpn_key),
+            labelText: 'Contraseña',
+          ),
+        ),
+        TextFormField(
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          maxLength: 8,
+          decoration: InputDecoration(
+            icon: Icon(Icons.phone_android),
+            labelText: 'Telefono',
+          ),
+        ),
+        RaisedButton(
+          child: Text('Guardar', style: TextStyle(fontSize: 20),),
+          color: Colors.cyan,
+          onPressed: () {
+            // Navega a la segunda ruta cuando se pulsa.
+            
+          },
+        ),
+        SizedBox(height: 5),
+        Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 13),),
+        Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 13),),
+        SizedBox(height: 2),
+      ]
+    );
+  }
+}
