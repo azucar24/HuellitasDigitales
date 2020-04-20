@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
+
+import 'home_page.dart';
 
 class MyAcount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: new Text('Huellita Digital, El Salvador.'),        
+        title: new Text('Huellita Digital, El Salvador.'),  
+        backgroundColor: Colors.blueGrey,      
       ),
       drawer: new Drawer(
         child: ListView(
           children: <Widget>[
-            new UserAccountsDrawerHeader(
-              accountName: new Text('Usuario'), 
-              accountEmail: new Text('Correo'),
-              currentAccountPicture: new CircleAvatar(),
+            new Container(
+              child: 
+                new UserAccountsDrawerHeader(
+                  accountName : new Text('Usuario'), 
+                  accountEmail: new Text('Correo'),
+                  currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
+                ),
+              color: Colors.blueGrey
             ),
+
             new ListTile(
               title: new Text('Inicio.'),
+              leading: Icon(Icons.home),
               onTap: (){
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                   MaterialPageRoute(builder: (context) => PrincipalPage()),
+                );
               },
             ),
             new Divider(
@@ -28,6 +40,7 @@ class MyAcount extends StatelessWidget {
             ),
              new ListTile(
               title: new Text('My Reservaciones.'),
+              leading: Icon(Icons.list),
               onTap: (){
                 Navigator.of(context).pop();
               },
@@ -38,6 +51,7 @@ class MyAcount extends StatelessWidget {
             ),
              new ListTile(
               title: new Text('New Reservacion.'),
+              leading: Icon(Icons.add_comment),
               onTap: (){
                 Navigator.of(context).pop();
               },
@@ -46,20 +60,14 @@ class MyAcount extends StatelessWidget {
               color: Colors.black,
               height: 5.0,
             ),
-             new ListTile(
-              title: new Text('My Acount.'),
-              onTap: (){
-                Navigator.of(context).pop();
-              },
-            ),
-             new Divider(
-              color: Colors.black,
-              height: 5.0,
-            ),
-             new ListTile(
+            new ListTile(
               title: new Text('Cerrar Sesion.'),
+              leading: Icon(Icons.exit_to_app),
               onTap: (){
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                   MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
             ),
           ]
