@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
 
-class PrincipalPage extends StatelessWidget {
+class MyAcount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: new Text('Huellita Digital, El Salvador.'),        
@@ -49,10 +49,7 @@ class PrincipalPage extends StatelessWidget {
              new ListTile(
               title: new Text('My Acount.'),
               onTap: (){
-                 Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MyAcount()),
-          );
+                Navigator.of(context).pop();
               },
             ),
              new Divider(
@@ -68,23 +65,24 @@ class PrincipalPage extends StatelessWidget {
           ]
         )
       ),
-
-
-
-
-
       body: 
         ListView(
           children : <Widget>[
             Center(
               child: Column(
                 children: <Widget>[
-                  Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),
-                  Text("Bienvenid@ a Huellita Digital", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
+                  Text("My Acount", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
+                  Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),                  
                   Divider(),
                   RaisedButton(
-                  child: Text('Reservación', style: TextStyle(fontSize: 20),),
-                  color: Colors.lightGreen,
+                  child: Text('Modificar.', style: TextStyle(fontSize: 20),),
+                  color: Colors.cyan,
+                   onPressed: () {},
+                  ),
+                   Divider(),
+                   RaisedButton(
+                  child: Text('Eliminar.', style: TextStyle(fontSize: 20),),
+                  color: Colors.cyan,
                    onPressed: () {},
                   ),
                   SizedBox(height: 5),
