@@ -6,20 +6,70 @@ class PrincipalPage extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // do something
-            },
-          ),
-        ],
-        title: Text("Huellita Digital, El Salvador"),
-        backgroundColor: Colors.blueGrey,
+        title: new Text('Huellita Digital, El Salvador.'),        
       ),
+      drawer: new Drawer(
+        child: ListView(
+          children: <Widget>[
+            new UserAccountsDrawerHeader(
+              accountName: new Text('Usuario'), 
+              accountEmail: new Text('Correo'),
+              currentAccountPicture: new CircleAvatar(),
+            ),
+            new ListTile(
+              title: new Text('Inicio.'),
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
+            new Divider(
+              color: Colors.black,
+              height: 5.0,
+            ),
+             new ListTile(
+              title: new Text('My Reservaciones.'),
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
+             new Divider(
+              color: Colors.black,
+              height: 5.0,
+            ),
+             new ListTile(
+              title: new Text('New Reservacion.'),
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
+             new Divider(
+              color: Colors.black,
+              height: 5.0,
+            ),
+             new ListTile(
+              title: new Text('My Acount.'),
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
+             new Divider(
+              color: Colors.black,
+              height: 5.0,
+            ),
+             new ListTile(
+              title: new Text('Cerrar Sesion.'),
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
+          ]
+        )
+      ),
+
+
+
+
+
       body: 
         ListView(
           children : <Widget>[
@@ -27,9 +77,13 @@ class PrincipalPage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),
-                  Text("Estamos en la pagina principal:", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
+                  Text("Bienvenid@ a Huellita Digital", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
                   Divider(),
-                  
+                  RaisedButton(
+                  child: Text('Reservación', style: TextStyle(fontSize: 20),),
+                  color: Colors.lightGreen,
+                   onPressed: () {},
+                  ),
                   SizedBox(height: 5),
                   Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 13),),
                   Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 13),),

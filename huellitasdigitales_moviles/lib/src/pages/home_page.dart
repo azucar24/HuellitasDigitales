@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget{
       body: 
         ListView(
           children : <Widget>[
-            Center(
+                Center(
               child: Column(
                 children: <Widget>[
                   Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),
