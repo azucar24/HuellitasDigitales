@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
 
+import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
+import 'package:huellitasdigitales_moviles/src/pages/updatedatauser_page.dart';
 import 'home_page.dart';
 
+class DataMyac {
+  String paramU;
+  String paramC;
+  String paramN;
+  DataMyac({this.paramU, this.paramC, this.paramN});
+}
+
+String name = "";
+String correo = "";
+
 class MyAcount extends StatelessWidget {
+  /*Recibir parametros de la principal*/
+  final DataP datap;
+  MyAcount({this.datap});
+
   @override
   Widget build(BuildContext context) {
+    if(this.datap.paramU != null){
+      name = this.datap.paramU;
+      correo = this.datap.paramC;
+    }else if(this.datap.paramU != null){
+      name = this.datap.paramU;
+      correo = this.datap.paramC;
+    }else{
+      name = "Nada";
+      correo = "Nada";
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: new Text('Huellita Digital, El Salvador.'),  
@@ -17,20 +43,27 @@ class MyAcount extends StatelessWidget {
             new Container(
               child: 
                 new UserAccountsDrawerHeader(
-                  accountName : new Text('Usuario'), 
-                  accountEmail: new Text('Correo'),
+                  accountName : new Text('Usuario $name'), 
+                  accountEmail: new Text('Correo $correo'),
                   currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
                 ),
               color: Colors.blueGrey
             ),
 
             new ListTile(
-              title: new Text('Inicio.'),
+              title: new Text('Inicio'),
               leading: Icon(Icons.home),
               onTap: (){
+                /*print(name);
+                print(correo);*/
+                
+                final datamyac = DataMyac(
+                  paramU: name,
+                  paramC: correo 
+                );
                 Navigator.push(
                   context,
-                   MaterialPageRoute(builder: (context) => PrincipalPage()),
+                   MaterialPageRoute(builder: (context) => PrincipalPage(datamyac:datamyac)),
                 );
               },
             ),
@@ -85,7 +118,12 @@ class MyAcount extends StatelessWidget {
                   RaisedButton(
                   child: Text('Modificar.', style: TextStyle(fontSize: 20),),
                   color: Colors.cyan,
-                   onPressed: () {},
+                   onPressed: () {
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UpdateDataUser()),
+                    );
+                   },
                   ),
                    Divider(),
                    RaisedButton(

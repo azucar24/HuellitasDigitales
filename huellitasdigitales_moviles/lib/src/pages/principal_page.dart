@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
 
+import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
 import 'home_page.dart';
 
+class DataP {
+  String paramU;
+  String paramC;
+  String paramN;
+  DataP({this.paramU, this.paramC, this.paramN});
+}
+
+String name = "";
+String correo = "";
+
 class PrincipalPage extends StatelessWidget {
+  
+  /*Recibir parametros del home */
+  final DataH datah;
+  /*Recibir parametros de Myaccount */
+  final DataMyac datamyac;
+  
+  PrincipalPage({this.datah, this.datamyac});
+  
+
   @override
   Widget build(BuildContext context) {
+    if(this.datah.paramU != null && this.datamyac == null){
+      name = this.datah.paramU;
+      correo = this.datah.paramC;
+    }else if(this.datamyac.paramU != null && this.datah == null){
+      name = this.datamyac.paramU;
+      correo = this.datamyac.paramC;
+    }else{
+      name = "Nada";
+      correo = "Nada";
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: new Text('Huellita Digital, El Salvador.'),   
@@ -14,16 +44,7 @@ class PrincipalPage extends StatelessWidget {
       drawer: new Drawer(
         child: ListView(
           children: <Widget>[
-            new Container(
-              child: 
-                new UserAccountsDrawerHeader(
-                  accountName : new Text('Usuario'), 
-                  accountEmail: new Text('Correo'),
-                  currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
-                ),
-              color: Colors.blueGrey
-            ),
-            
+            datosHeader(context), //Llamamos la cabecera del menu desplegable
             
             new ListTile(
               title: new Text('My Reservaciones.'),
@@ -51,10 +72,19 @@ class PrincipalPage extends StatelessWidget {
               title: new Text('My Acount.'),
               leading: Icon(Icons.person),
               onTap: (){
-                 Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => MyAcount()),
+                /*print(name);
+                print(correo);*/
+                  
+                final datap = DataP(
+                  paramU: name,
+                  paramC: correo, //Parametro que viene desde el home
                 );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyAcount(datap:datap)),
+                );
+                name = "";
+                correo = "";
               },
             ),
             new Divider(
@@ -74,11 +104,6 @@ class PrincipalPage extends StatelessWidget {
           ]
         )
       ),
-
-
-
-
-
       body: 
         ListView(
           children : <Widget>[
@@ -105,4 +130,31 @@ class PrincipalPage extends StatelessWidget {
     );
   }
   
+  Widget datosHeader(BuildContext context){
+    if (name != null) {
+      return 
+        new Container(
+          child: 
+            new UserAccountsDrawerHeader(
+              accountName : new Text('Usuario $name'), 
+              accountEmail: new Text('Correo $correo'),
+              currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
+            ),
+            color: Colors.blueGrey
+        )
+      ;
+    }else{
+      return 
+        new Container(
+          child: 
+            new UserAccountsDrawerHeader(
+              accountName : new Text('Usuario vacios'), 
+              accountEmail: new Text('Correo vacios'),
+              currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
+            ),
+            color: Colors.blueGrey
+        )
+      ;
+    }
+  }
 }

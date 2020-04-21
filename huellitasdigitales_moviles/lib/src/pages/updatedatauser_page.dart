@@ -41,9 +41,11 @@ class UpdateDataUser extends StatelessWidget{
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 50,
+          textCapitalization: TextCapitalization.sentences,
           decoration: InputDecoration(
             icon: Icon(Icons.person),
             labelText: 'Nombre completo',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
         SizedBox(width: 50),
@@ -56,6 +58,7 @@ class UpdateDataUser extends StatelessWidget{
           decoration: InputDecoration(
             icon: Icon(Icons.mail),
             labelText: 'Correo electronico',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
         TextFormField(
@@ -67,6 +70,7 @@ class UpdateDataUser extends StatelessWidget{
           decoration: InputDecoration(
             icon: Icon(Icons.verified_user),
             labelText: 'Nombre de usuario',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
         TextFormField(
@@ -79,6 +83,7 @@ class UpdateDataUser extends StatelessWidget{
           decoration: InputDecoration(
             icon: Icon(Icons.vpn_key),
             labelText: 'Contraseña',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
         TextFormField(
@@ -90,6 +95,7 @@ class UpdateDataUser extends StatelessWidget{
           decoration: InputDecoration(
             icon: Icon(Icons.phone_android),
             labelText: 'Telefono',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
         RaisedButton(
