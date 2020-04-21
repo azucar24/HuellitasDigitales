@@ -25,10 +25,10 @@ class PrincipalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(this.datah.paramU != null && this.datamyac == null){
+    if(this.datah != null && this.datamyac == null){
       name = this.datah.paramU;
       correo = this.datah.paramC;
-    }else if(this.datamyac.paramU != null && this.datah == null){
+    }else if(this.datamyac != null && this.datah == null){
       name = this.datamyac.paramU;
       correo = this.datamyac.paramC;
     }else{
