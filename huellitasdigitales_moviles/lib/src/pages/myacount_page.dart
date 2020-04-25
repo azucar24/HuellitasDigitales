@@ -52,7 +52,7 @@ class MyAcount extends StatelessWidget {
             ),
 
             new ListTile(
-              title: new Text('Inicio'),
+              title: new Text('Inicio',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.home),
               onTap: (){
                 /*print(name);
@@ -73,7 +73,7 @@ class MyAcount extends StatelessWidget {
               height: 5.0,
             ),
              new ListTile(
-              title: new Text('Mis Reservaciones.',style: TextStyle(fontSize: 25)),
+              title: new Text('Mis Reservaciones.',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.list),
               onTap: (){
                 Navigator.of(context).pop();
