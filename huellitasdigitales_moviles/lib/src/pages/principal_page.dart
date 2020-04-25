@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
 import 'package:huellitasdigitales_moviles/src/pages/myreservation.dart';
+import 'package:huellitasdigitales_moviles/src/pages/reservar.dart';
 import 'home_page.dart';
 
 class DataP {
@@ -16,22 +17,32 @@ String name = "";
 String correo = "";
 
 class PrincipalPage extends StatelessWidget {
+  /*Recibir parametros de mis reservaciones */
+  final DataMyre datamyre;
   /*Recibir parametros del home */
   final DataH datah;
   /*Recibir parametros de Myaccount */
   final DataMyac datamyac;
+  /*Recibir parametros de new reservacion */
+  final Datanewreserv datanewreserv;
 
-  PrincipalPage({this.datah, this.datamyac});
+  PrincipalPage({this.datah, this.datamyac, this.datamyre, this.datanewreserv});
 
   @override
   Widget build(BuildContext context) {
-    if (this.datah != null && this.datamyac == null) {
+    if (this.datah != null && this.datamyac == null && this.datamyre == null && this.datanewreserv == null) {
       name = this.datah.paramU;
       correo = this.datah.paramC;
-    } else if (this.datamyac != null && this.datah == null) {
+    } else if (this.datamyac != null && this.datah == null && this.datamyre == null && this.datanewreserv == null) {
       name = this.datamyac.paramU;
       correo = this.datamyac.paramC;
-    } else {
+    } else if(this.datamyre != null && this.datah == null && this.datamyac == null && this.datanewreserv == null){
+      name = this.datamyre.paramU;
+      correo = this.datamyre.paramC;
+    }else if(this.datanewreserv != null && this.datah == null && this.datamyac == null && this.datamyre == null){
+      name = this.datanewreserv.paramU;
+      correo = this.datanewreserv.paramC;
+    }else {
       name = "Nada";
       correo = "Nada";
     }
@@ -51,12 +62,16 @@ class PrincipalPage extends StatelessWidget {
             leading: Icon(Icons.list),
             onTap: () {
              
+              final datap = DataP(
+                paramU: name,
+                paramC: correo, //Parametro que viene desde el home
+              );
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MyReservations()),
+                    builder: (context) => MyReservations(datap: datap)),
               );
-              
             },
           ),
           new Divider(
@@ -68,7 +83,17 @@ class PrincipalPage extends StatelessWidget {
                 new Text('Nueva Reservacion.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.add_comment),
             onTap: () {
-              Navigator.of(context).pop();
+              
+              final datap = DataP(
+                paramU: name,
+                paramC: correo, //Parametro que viene desde el home
+              );
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Reservations(datap:datap)),
+              );
             },
           ),
           new Divider(

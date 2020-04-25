@@ -7,21 +7,34 @@ import 'package:huellitasdigitales_moviles/src/pages/reservar.dart';
 
 import 'home_page.dart';
 
-class DataP {
+class DataMyre {
   String paramU;
   String paramC;
   String paramN;
-  DataP({this.paramU, this.paramC, this.paramN});
+  DataMyre({this.paramU, this.paramC, this.paramN});
 }
 
 String name = "";
 String correo = "";
 
 class MyReservations extends StatelessWidget {
-  /*Recibir parametros del home */
+  /*Recibir parametros de la principal */
+  final DataP datap;
+  MyReservations({this.datap});
 
   @override
   Widget build(BuildContext context) {
+    if(this.datap.paramU != null){
+      name = this.datap.paramU;
+      correo = this.datap.paramC;
+    }else if(this.datap.paramU != null){
+      name = this.datap.paramU;
+      correo = this.datap.paramC;
+    }else{
+      name = "Nada";
+      correo = "Nada";
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: new Text('Huellita Digital, El Salvador.',
@@ -33,12 +46,17 @@ class MyReservations extends StatelessWidget {
           datosHeader(context), //Llamamos la cabecera del menu desplegable
           new ListTile(
             title:
-                new Text('Nueva Reservacion.', style: TextStyle(fontSize: 20)),
-            leading: Icon(Icons.list),
+                new Text('Inicio', style: TextStyle(fontSize: 20)),
+            leading: Icon(Icons.home),
             onTap: () {
+
+              final datamyre = DataMyre(
+                  paramU: name,
+                  paramC: correo 
+                );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PrincipalPage()),
+                MaterialPageRoute(builder: (context) => PrincipalPage(datamyre:datamyre)),
               );
             },
           ),
@@ -163,7 +181,7 @@ class MyReservations extends StatelessWidget {
           DataCell(Text('Salvador Azucar')),
           DataCell(Text('20/12/2020')),
           DataCell(Text('2:00 pm')),
-          DataCell(IconButton(icon: Icon(Icons.delete)))
+          DataCell(IconButton(icon: Icon(Icons.delete), onPressed: () {},))
         ]),
       ],
     );

@@ -1,16 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
-
+import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
 import 'home_page.dart';
 
+class Datanewreserv {
+  String paramU;
+  String paramC;
+  String paramN;
+  Datanewreserv({this.paramU, this.paramC, this.paramN});
+}
+
+String name = "";
+String correo = "";
 
 class Reservations extends StatelessWidget {
-  /*Recibir parametros del home */
+  /*Recibir parametros de la principal*/
+   final DataP datap;
+  Reservations({this.datap});
 
   @override
   Widget build(BuildContext context) {
+    if(this.datap.paramU != null){
+      name = this.datap.paramU;
+      correo = this.datap.paramC;
+    }else if(this.datap.paramU != null){
+      name = this.datap.paramU;
+      correo = this.datap.paramC;
+    }else{
+      name = "Nada";
+      correo = "Nada";
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: new Text('Huellita Digital, El Salvador.',
@@ -20,6 +41,27 @@ class Reservations extends StatelessWidget {
         drawer: new Drawer(
             child: ListView(children: <Widget>[
           datosHeader(context), //Llamamos la cabecera del menu desplegable
+          new ListTile(
+            title: new Text('Inicio',style: TextStyle(fontSize: 20)),
+            leading: Icon(Icons.home),
+            onTap: (){
+              /*print(name);
+              print(correo);*/
+                
+              final datanewreserv = Datanewreserv(
+                paramU: name,
+                paramC: correo 
+              );
+              Navigator.push(
+                context,
+                  MaterialPageRoute(builder: (context) => PrincipalPage(datanewreserv:datanewreserv)),
+              );
+            },
+          ),
+          new Divider(
+            color: Colors.black,
+            height: 5.0,
+          ),
           new ListTile(
             title:
                 new Text('Mis Reservaciones.', style: TextStyle(fontSize: 20)),
