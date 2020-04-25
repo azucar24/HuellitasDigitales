@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
 
-String _lookU = "yonathan";
-String _lookP = "tu90mama";
+String _lookU = "huellitas";
+String _lookP = "huellitas";
 String _user = "";
 String _password = "";
 
