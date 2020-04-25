@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
-import 'package:huellitasdigitales_moviles/src/pages/myreservation.dart';
+import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
+import 'package:huellitasdigitales_moviles/src/pages/reservar.dart';
+
 import 'home_page.dart';
 
 class DataP {
@@ -15,27 +17,11 @@ class DataP {
 String name = "";
 String correo = "";
 
-class PrincipalPage extends StatelessWidget {
+class MyReservations extends StatelessWidget {
   /*Recibir parametros del home */
-  final DataH datah;
-  /*Recibir parametros de Myaccount */
-  final DataMyac datamyac;
-
-  PrincipalPage({this.datah, this.datamyac});
 
   @override
   Widget build(BuildContext context) {
-    if (this.datah != null && this.datamyac == null) {
-      name = this.datah.paramU;
-      correo = this.datah.paramC;
-    } else if (this.datamyac != null && this.datah == null) {
-      name = this.datamyac.paramU;
-      correo = this.datamyac.paramC;
-    } else {
-      name = "Nada";
-      correo = "Nada";
-    }
-
     return Scaffold(
         appBar: AppBar(
           title: new Text('Huellita Digital, El Salvador.',
@@ -47,16 +33,13 @@ class PrincipalPage extends StatelessWidget {
           datosHeader(context), //Llamamos la cabecera del menu desplegable
           new ListTile(
             title:
-                new Text('Mis Reservaciones.', style: TextStyle(fontSize: 20)),
+                new Text('Nueva Reservacion.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.list),
             onTap: () {
-             
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => MyReservations()),
+                MaterialPageRoute(builder: (context) => PrincipalPage()),
               );
-              
             },
           ),
           new Divider(
@@ -68,7 +51,10 @@ class PrincipalPage extends StatelessWidget {
                 new Text('Nueva Reservacion.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.add_comment),
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Reservations()),
+              );
             },
           ),
           new Divider(
@@ -82,16 +68,10 @@ class PrincipalPage extends StatelessWidget {
               /*print(name);
                 print(correo);*/
 
-              final datap = DataP(
-                paramU: name,
-                paramC: correo, //Parametro que viene desde el home
-              );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyAcount(datap: datap)),
+                MaterialPageRoute(builder: (context) => MyAcount()),
               );
-              name = "";
-              correo = "";
             },
           ),
           new Divider(
@@ -113,26 +93,25 @@ class PrincipalPage extends StatelessWidget {
           Center(
               child: Column(
             children: <Widget>[
-              Image(
-                  image: AssetImage("assets/images/pp.jpg"),
-                  width: 700,
-                  height: 300),
-              Divider(),
               Text(
-                "Bienvenid@ a Huellita Digital",
+                "Mis Reservaciones",
                 style: TextStyle(fontSize: 30),
-                textAlign: TextAlign.center,
               ),
+              Divider(),
+              listarreservacions(),
+              Divider(),
+
               Divider(),
               CupertinoButton(
                 child: Text('Reservar mi boleto +',
                     style: TextStyle(fontSize: 25)),
                 color: Colors.cyan[600],
+                
                 onPressed: () {},
+                
               ),
-              Divider(),
-              Divider(),
-              Divider(),
+
+         
               Divider(),
               SizedBox(height: 5),
               Text(
@@ -169,5 +148,24 @@ class PrincipalPage extends StatelessWidget {
           ),
           color: Colors.blueGrey);
     }
+  }
+
+  Widget listarreservacions() {
+    return DataTable(
+      columns: [
+        DataColumn(label: Text('Nombre')),
+        DataColumn(label: Text('Fecha')),
+        DataColumn(label: Text('Hora')),
+        DataColumn(label: Text('Opciones')),
+      ],
+      rows: [
+        DataRow(cells: [
+          DataCell(Text('Salvador Azucar')),
+          DataCell(Text('20/12/2020')),
+          DataCell(Text('2:00 pm')),
+          DataCell(IconButton(icon: Icon(Icons.delete)))
+        ]),
+      ],
+    );
   }
 }
