@@ -12,14 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table (name="usuarios")
 public class Usuarios implements Serializable{
-	/*todos los atributos de la tabla como campos van aca.*/
 	
 	private static final long serialVersionUID = 1L;
 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	@Column(name="usuario_nombre", length=50)
 	private String usuarioNombre;
@@ -42,11 +41,12 @@ public class Usuarios implements Serializable{
 	@Column(name="usuario_rol", length=8)
 	private String usuarioRol;
 
-	public Long getId() {
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

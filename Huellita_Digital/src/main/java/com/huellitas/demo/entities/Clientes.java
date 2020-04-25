@@ -15,13 +15,12 @@ import javax.persistence.Table;
 @Entity
 @Table (name="clientes")
 public class Clientes implements Serializable{
-	/*Campos*/
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	@Column(name="cliente_nombre", length=50)
 	private String clienteNombre;
@@ -41,11 +40,11 @@ public class Clientes implements Serializable{
 	@Column(name="cliente_sexo", length=1)
 	private char clienteSexo;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -15,11 +15,10 @@ import javax.persistence.Table;
 @Entity
 @Table (name="reservaciones")
 public class Reservaciones implements Serializable{
-	/*Campos de tabla*/
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	@Column(name="reservacion_nombre_resp", length=50)
 	private String reservacionNombreResp;
@@ -46,11 +45,12 @@ public class Reservaciones implements Serializable{
 	@JoinColumn(name = "reservacion_id_cliente", insertable=false, updatable=false)
 	private Clientes cliente;
 
-	public Long getId() {
+	
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
