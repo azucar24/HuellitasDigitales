@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
@@ -34,8 +35,8 @@ class MyAcount extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: new Text('Huellita Digital, El Salvador.'),  
-        backgroundColor: Colors.blueGrey,      
+        title: new Text('Huellita Digital, El Salvador.',style: TextStyle(fontSize: 25)),  
+        backgroundColor: Colors.cyan[700],      
       ),
       drawer: new Drawer(
         child: ListView(
@@ -43,8 +44,8 @@ class MyAcount extends StatelessWidget {
             new Container(
               child: 
                 new UserAccountsDrawerHeader(
-                  accountName : new Text('Usuario $name'), 
-                  accountEmail: new Text('Correo $correo'),
+                  accountName : new Text('Usuario $name',style: TextStyle(fontSize: 25)), 
+                  accountEmail: new Text('Correo $correo',style: TextStyle(fontSize: 20)),
                   currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
                 ),
               color: Colors.blueGrey
@@ -72,7 +73,7 @@ class MyAcount extends StatelessWidget {
               height: 5.0,
             ),
              new ListTile(
-              title: new Text('My Reservaciones.'),
+              title: new Text('Mis Reservaciones.',style: TextStyle(fontSize: 25)),
               leading: Icon(Icons.list),
               onTap: (){
                 Navigator.of(context).pop();
@@ -83,7 +84,7 @@ class MyAcount extends StatelessWidget {
               height: 5.0,
             ),
              new ListTile(
-              title: new Text('New Reservacion.'),
+              title: new Text('Nueva Reservacion.',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.add_comment),
               onTap: (){
                 Navigator.of(context).pop();
@@ -94,7 +95,7 @@ class MyAcount extends StatelessWidget {
               height: 5.0,
             ),
             new ListTile(
-              title: new Text('Cerrar Sesion.'),
+              title: new Text('Cerrar Sesion.',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.exit_to_app),
               onTap: (){
                 Navigator.push(
@@ -115,9 +116,9 @@ class MyAcount extends StatelessWidget {
                   Text("My Acount", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
                   Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),                  
                   Divider(),
-                  RaisedButton(
-                  child: Text('Modificar.', style: TextStyle(fontSize: 20),),
-                  color: Colors.cyan,
+                 CupertinoButton(
+                  child: Text('Actualizar.', style: TextStyle(fontSize: 25),),
+                  color: Colors.blueGrey,
                    onPressed: () {
                      Navigator.push(
                       context,
@@ -126,9 +127,9 @@ class MyAcount extends StatelessWidget {
                    },
                   ),
                    Divider(),
-                   RaisedButton(
-                  child: Text('Eliminar.', style: TextStyle(fontSize: 20),),
-                  color: Colors.cyan,
+                   CupertinoButton(
+                  child: Text('Eliminar.', style: TextStyle(fontSize: 25),),
+                  color: Colors.redAccent,
                    onPressed: () {},
                   ),
                   SizedBox(height: 5),

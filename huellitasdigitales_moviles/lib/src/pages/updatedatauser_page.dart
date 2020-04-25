@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -15,13 +16,13 @@ class UpdateDataUser extends StatelessWidget{
             Center(
               child: Column(
                 children: <Widget>[
-                  Image(image:AssetImage("assets/images/pp.jpg"), width:150,height:150),
+                  Image(image:AssetImage("assets/images/pp.jpg"), width:700,height:150),
                   Text("Actualiza tus datos:", style: TextStyle(fontSize: 30),),
                   Divider(),
                   cajas(),
                   SizedBox(height: 5),
-                  Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 13),),
-                  Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 13),),
+                  Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 15),),
+                  Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 15),),
                   SizedBox(height: 2),
                 ],
               ) 
@@ -37,7 +38,7 @@ class UpdateDataUser extends StatelessWidget{
       children: <Widget>[
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 50,
@@ -51,7 +52,7 @@ class UpdateDataUser extends StatelessWidget{
         SizedBox(width: 50),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.emailAddress,
           maxLines: 1,
           maxLength: 25,
@@ -63,7 +64,7 @@ class UpdateDataUser extends StatelessWidget{
         ),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 15,
@@ -75,7 +76,7 @@ class UpdateDataUser extends StatelessWidget{
         ),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 15,
@@ -88,7 +89,7 @@ class UpdateDataUser extends StatelessWidget{
         ),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.phone,
           maxLines: 1,
           maxLength: 8,
@@ -98,9 +99,9 @@ class UpdateDataUser extends StatelessWidget{
             contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
-        RaisedButton(
-          child: Text('Guardar', style: TextStyle(fontSize: 20),),
-          color: Colors.cyan,
+        CupertinoButton(
+          child: Text('Actualizar', style: TextStyle(fontSize: 20),),
+          color: Colors.cyan[700],
           onPressed: () {
             // Navega a la segunda ruta cuando se pulsa.
             

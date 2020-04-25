@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
 
@@ -21,8 +22,8 @@ class HomePage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Huellita Digital, El Salvador"),
-        backgroundColor: Colors.blueGrey,
+        title: Text("Huellita Digital, El Salvador", style: TextStyle(fontSize:25),),
+        backgroundColor: Colors.cyan[700],
       ),
       body: 
         ListView(
@@ -30,14 +31,13 @@ class HomePage extends StatelessWidget{
                 Center(
               child: Column(
                 children: <Widget>[
-                  Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),
-                  Text("Ingresa tus datos:", style: TextStyle(fontSize: 30),),
+                  Image(image:AssetImage("assets/images/pp.jpg"), width:700,height:300),
                   Divider(),
                   cajitas(context),
                   botones(context),
                   SizedBox(height: 5),
-                  Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 13),),
-                  Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 13),),
+                  Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 15),),
+                  Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 15),),
                   SizedBox(height: 2),
                 ],
               ) 
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget{
       children: <Widget>[
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 30),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 15,
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget{
         SizedBox(width: 50),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 30),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 15,
@@ -90,9 +90,9 @@ class HomePage extends StatelessWidget{
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        RaisedButton(
-          child: Text('Entrar', style: TextStyle(fontSize: 20),),
-          color: Colors.cyan,
+        CupertinoButton(
+          child: Text('Iniciar sesion', style: TextStyle(fontSize: 25),),
+          color: Colors.cyan[700],
           onPressed: () {
             // Navega a la segunda ruta cuando se pulsa.
             /*print(_user);
@@ -121,10 +121,11 @@ class HomePage extends StatelessWidget{
               _alertaerrordata(context);
             }
           },
-        ),
+        ),Divider(),
         SizedBox(width: 50),
-        RaisedButton(
-          child: Text('Registrarse', style: TextStyle(fontSize: 20),),
+        CupertinoButton(
+          child: Text('Crear cuenta', style: TextStyle(fontSize: 25),),
+          color: Colors.black38,
           onPressed: () {
             // Navega a la segunda ruta cuando se pulsa.
             Navigator.push(
@@ -201,8 +202,8 @@ class UserAdd extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Huellita Digital, El Salvador"),
-        backgroundColor: Colors.blueGrey,
+        title: Text("Huellita Digital, El Salvador",style: TextStyle(fontSize: 25)),
+        backgroundColor: Colors.cyan[700],
       ),
       body: 
         ListView(
@@ -210,7 +211,7 @@ class UserAdd extends StatelessWidget{
             Center(
             child: Column(
               children: <Widget>[
-                Image(image:AssetImage("assets/images/pp.jpg"), width:150,height:150),
+                Image(image:AssetImage("assets/images/pp.jpg"), width:700,height:150),
                 Text("Registra tus datos", style: TextStyle(fontSize: 35),),
                 cajas()
               ],
@@ -227,7 +228,7 @@ class UserAdd extends StatelessWidget{
       children: <Widget>[
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 50,
@@ -244,7 +245,7 @@ class UserAdd extends StatelessWidget{
         SizedBox(width: 50),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.emailAddress,
           maxLines: 1,
           maxLength: 25,
@@ -256,7 +257,7 @@ class UserAdd extends StatelessWidget{
         ),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 15,
@@ -268,7 +269,7 @@ class UserAdd extends StatelessWidget{
         ),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.multiline,
           maxLines: 1,
           maxLength: 15,
@@ -281,7 +282,7 @@ class UserAdd extends StatelessWidget{
         ),
         TextFormField(
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 25),
           keyboardType: TextInputType.phone,
           maxLines: 1,
           maxLength: 8,
@@ -291,17 +292,17 @@ class UserAdd extends StatelessWidget{
             contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
-        RaisedButton(
-          child: Text('Guardar', style: TextStyle(fontSize: 20),),
-          color: Colors.cyan,
+        CupertinoButton(
+          child: Text('Crear cuenta', style: TextStyle(fontSize: 25),),
+          color: Colors.cyan[700],
           onPressed: () {
             // Navega a la segunda ruta cuando se pulsa.
             
           },
         ),
         SizedBox(height: 5),
-        Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 13),),
-        Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 13),),
+        Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 15),),
+        Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 15),),
         SizedBox(height: 2),
       ]
     );

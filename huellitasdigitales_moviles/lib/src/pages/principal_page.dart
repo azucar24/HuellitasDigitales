@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
@@ -38,16 +39,15 @@ class PrincipalPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: new Text('Huellita Digital, El Salvador.'),   
-        backgroundColor: Colors.blueGrey,     
+        title: new Text('Huellita Digital, El Salvador.', style: TextStyle(fontSize:25)),   
+        backgroundColor: Colors.cyan[700],     
       ),
       drawer: new Drawer(
         child: ListView(
           children: <Widget>[
             datosHeader(context), //Llamamos la cabecera del menu desplegable
-            
-            new ListTile(
-              title: new Text('My Reservaciones.'),
+              new ListTile(
+              title: new Text('Mis Reservaciones.',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.list),
               onTap: (){
                 Navigator.of(context).pop();
@@ -58,7 +58,7 @@ class PrincipalPage extends StatelessWidget {
               height: 5.0,
             ),
             new ListTile(
-              title: new Text('New Reservacion.'),
+              title: new Text('Nueva Reservacion.',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.add_comment),
               onTap: (){
                 Navigator.of(context).pop();
@@ -69,7 +69,7 @@ class PrincipalPage extends StatelessWidget {
               height: 5.0,
             ),
             new ListTile(
-              title: new Text('My Acount.'),
+              title: new Text('My Acount.',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.person),
               onTap: (){
                 /*print(name);
@@ -92,7 +92,7 @@ class PrincipalPage extends StatelessWidget {
               height: 5.0,
             ),
             new ListTile(
-              title: new Text('Cerrar Sesion.'),
+              title: new Text('Cerrar Sesion.',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.exit_to_app),
               onTap: (){
                 Navigator.push(
@@ -110,17 +110,22 @@ class PrincipalPage extends StatelessWidget {
             Center(
               child: Column(
                 children: <Widget>[
-                  Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),
+                  Image(image:AssetImage("assets/images/pp.jpg"), width:700,height:300),
+                  Divider(),
                   Text("Bienvenid@ a Huellita Digital", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
                   Divider(),
-                  RaisedButton(
-                  child: Text('Reservación', style: TextStyle(fontSize: 20),),
-                  color: Colors.lightGreen,
-                   onPressed: () {},
+                  CupertinoButton(                    
+                  child: Text('Reservar mi boleto +', style: TextStyle(fontSize: 25)),
+                  color: Colors.cyan[600],
+                  onPressed: () {},
                   ),
+                  Divider(),
+                  Divider(),
+                  Divider(),
+                  Divider(),
                   SizedBox(height: 5),
-                  Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 13),),
-                  Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 13),),
+                  Text("San Miguel, El Salvador, Todos los derechos reservados.", style: TextStyle(fontSize: 15),),
+                  Text("© Huellitas Digitales, 2020", style: TextStyle(fontSize: 15),),
                   SizedBox(height: 2),
                 ],
               ) 
@@ -136,11 +141,11 @@ class PrincipalPage extends StatelessWidget {
         new Container(
           child: 
             new UserAccountsDrawerHeader(
-              accountName : new Text('Usuario $name'), 
+              accountName : new Text('Us: $name',style: TextStyle(fontSize: 25)), 
               accountEmail: new Text('Correo $correo'),
               currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
             ),
-            color: Colors.blueGrey
+            color: Colors.black45
         )
       ;
     }else{
