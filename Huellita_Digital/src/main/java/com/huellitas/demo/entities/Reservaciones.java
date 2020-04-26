@@ -18,7 +18,7 @@ public class Reservaciones implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	@Column(name="reservacion_nombre_resp", length=50)
 	private String reservacionNombreResp;
@@ -39,18 +39,18 @@ public class Reservaciones implements Serializable{
 	private char reservacionEstado;
 	
 	@Column(name="reservacion_id_cliente", length=11)
-	private int reservacionIdCliente;
+	private Long reservacionIdCliente;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reservacion_id_cliente", insertable=false, updatable=false)
-	private Clientes cliente;
+	private Clientes clientes;
 
-	
-	public int getId() {
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -102,21 +102,16 @@ public class Reservaciones implements Serializable{
 		this.reservacionEstado = reservacionEstado;
 	}
 
-	public int getReservacionIdCliente() {
+
+	public Long getReservacionIdCliente() {
 		return reservacionIdCliente;
 	}
 
-	public void setReservacionIdCliente(int reservacionIdCliente) {
+	public void setReservacionIdCliente(Long reservacionIdCliente) {
 		this.reservacionIdCliente = reservacionIdCliente;
 	}
 
-	public Clientes getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Clientes cliente) {
-		this.cliente = cliente;
-	}
+	
 	
 	
 

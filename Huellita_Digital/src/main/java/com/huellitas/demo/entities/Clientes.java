@@ -20,7 +20,7 @@ public class Clientes implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	@Column(name="cliente_nombre", length=50)
 	private String clienteNombre;
@@ -39,12 +39,13 @@ public class Clientes implements Serializable{
 	
 	@Column(name="cliente_sexo", length=1)
 	private char clienteSexo;
+	
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
