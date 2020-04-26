@@ -111,8 +111,5 @@ public class Reservaciones implements Serializable{
 		this.reservacionIdCliente = reservacionIdCliente;
 	}
 
-	
-	
-	
 
 }

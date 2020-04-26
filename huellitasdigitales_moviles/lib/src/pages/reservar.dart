@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:huellitasdigitales_moviles/src/pages/myacount_page.dart';
+import 'package:huellitasdigitales_moviles/src/pages/myreservation.dart';
 import 'package:huellitasdigitales_moviles/src/pages/principal_page.dart';
 import 'home_page.dart';
 
@@ -15,18 +16,26 @@ String name = "";
 String correo = "";
 
 class Reservations extends StatelessWidget {
+  /*Recibir parametros de myaccount */
+  final DataMyac datamyac;
+  /*Recibir parametros de mis reservaciones */
+  final DataMyre datamyre;
   /*Recibir parametros de la principal*/
    final DataP datap;
-  Reservations({this.datap});
+
+  Reservations({this.datap, this.datamyre, this.datamyac});
 
   @override
   Widget build(BuildContext context) {
-    if(this.datap.paramU != null){
+    if(this.datap != null && this.datamyre == null && this.datamyac == null){
       name = this.datap.paramU;
       correo = this.datap.paramC;
-    }else if(this.datap.paramU != null){
-      name = this.datap.paramU;
-      correo = this.datap.paramC;
+    }else if(this.datamyre != null && this.datap == null && this.datamyac == null){
+      name = this.datamyre.paramU;
+      correo = this.datamyre.paramC;
+    }else if(this.datamyac != null && this.datap == null && this.datamyre == null){
+      name = this.datamyac.paramU;
+      correo = this.datamyac.paramC;
     }else{
       name = "Nada";
       correo = "Nada";
@@ -67,9 +76,13 @@ class Reservations extends StatelessWidget {
                 new Text('Mis Reservaciones.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.list),
             onTap: () {
+              final datanewreserv = Datanewreserv(
+                paramU: name,
+                paramC: correo 
+              );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Reservations()),
+                MaterialPageRoute(builder: (context) => MyReservations(datanewreserv:datanewreserv)),
               );
             },
           ),
@@ -82,12 +95,13 @@ class Reservations extends StatelessWidget {
             title: new Text('My Acount.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.person),
             onTap: () {
-              /*print(name);
-                print(correo);*/
-
+              final datanewreserv = Datanewreserv(
+                paramU: name,
+                paramC: correo 
+              );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyAcount()),
+                MaterialPageRoute(builder: (context) => MyAcount(datanewreserv:datanewreserv)),
               );
             },
           ),

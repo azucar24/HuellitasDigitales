@@ -18,18 +18,25 @@ String name = "";
 String correo = "";
 
 class MyReservations extends StatelessWidget {
+  /*Recibir parametros de myaccount */
+  final DataMyac datamyac;
+  /*Recibir parametros de new reservaciones */
+  final Datanewreserv datanewreserv;
   /*Recibir parametros de la principal */
   final DataP datap;
-  MyReservations({this.datap});
+  MyReservations({this.datap, this.datanewreserv, this.datamyac});
 
   @override
   Widget build(BuildContext context) {
-    if(this.datap.paramU != null){
+    if(this.datap != null && this.datanewreserv == null && this.datamyac == null){
       name = this.datap.paramU;
       correo = this.datap.paramC;
-    }else if(this.datap.paramU != null){
-      name = this.datap.paramU;
-      correo = this.datap.paramC;
+    }else if(this.datanewreserv != null && this.datap == null && this.datamyac == null){
+      name = this.datanewreserv.paramU;
+      correo = this.datanewreserv.paramC;
+    }else if(this.datamyac != null && this.datap == null && this.datanewreserv == null){
+      name = this.datamyac.paramU;
+      correo = this.datamyac.paramC;
     }else{
       name = "Nada";
       correo = "Nada";
@@ -53,7 +60,7 @@ class MyReservations extends StatelessWidget {
               final datamyre = DataMyre(
                   paramU: name,
                   paramC: correo 
-                );
+              );
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => PrincipalPage(datamyre:datamyre)),
@@ -69,9 +76,13 @@ class MyReservations extends StatelessWidget {
                 new Text('Nueva Reservacion.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.add_comment),
             onTap: () {
+              final datamyre = DataMyre(
+                  paramU: name,
+                  paramC: correo 
+              );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Reservations()),
+                MaterialPageRoute(builder: (context) => Reservations(datamyre:datamyre)),
               );
             },
           ),
@@ -85,10 +96,13 @@ class MyReservations extends StatelessWidget {
             onTap: () {
               /*print(name);
                 print(correo);*/
-
+              final datamyre = DataMyre(
+                  paramU: name,
+                  paramC: correo 
+              );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyAcount()),
+                MaterialPageRoute(builder: (context) => MyAcount(datamyre:datamyre)),
               );
             },
           ),
