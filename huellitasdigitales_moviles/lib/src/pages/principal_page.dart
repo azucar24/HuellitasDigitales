@@ -30,19 +30,31 @@ class PrincipalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (this.datah != null && this.datamyac == null && this.datamyre == null && this.datanewreserv == null) {
+    if (this.datah != null &&
+        this.datamyac == null &&
+        this.datamyre == null &&
+        this.datanewreserv == null) {
       name = this.datah.paramU;
       correo = this.datah.paramC;
-    } else if (this.datamyac != null && this.datah == null && this.datamyre == null && this.datanewreserv == null) {
+    } else if (this.datamyac != null &&
+        this.datah == null &&
+        this.datamyre == null &&
+        this.datanewreserv == null) {
       name = this.datamyac.paramU;
       correo = this.datamyac.paramC;
-    } else if(this.datamyre != null && this.datah == null && this.datamyac == null && this.datanewreserv == null){
+    } else if (this.datamyre != null &&
+        this.datah == null &&
+        this.datamyac == null &&
+        this.datanewreserv == null) {
       name = this.datamyre.paramU;
       correo = this.datamyre.paramC;
-    }else if(this.datanewreserv != null && this.datah == null && this.datamyac == null && this.datamyre == null){
+    } else if (this.datanewreserv != null &&
+        this.datah == null &&
+        this.datamyac == null &&
+        this.datamyre == null) {
       name = this.datanewreserv.paramU;
       correo = this.datanewreserv.paramC;
-    }else {
+    } else {
       name = "Nada";
       correo = "Nada";
     }
@@ -61,7 +73,6 @@ class PrincipalPage extends StatelessWidget {
                 new Text('Mis Reservaciones.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.list),
             onTap: () {
-             
               final datap = DataP(
                 paramU: name,
                 paramC: correo, //Parametro que viene desde el home
@@ -83,7 +94,6 @@ class PrincipalPage extends StatelessWidget {
                 new Text('Nueva Reservacion.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.add_comment),
             onTap: () {
-              
               final datap = DataP(
                 paramU: name,
                 paramC: correo, //Parametro que viene desde el home
@@ -92,7 +102,7 @@ class PrincipalPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Reservations(datap:datap)),
+                    builder: (context) => Reservations(datap: datap)),
               );
             },
           ),
@@ -145,15 +155,22 @@ class PrincipalPage extends StatelessWidget {
               Divider(),
               Text(
                 "Bienvenid@ a Huellita Digital",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
               Divider(),
               CupertinoButton(
                 child: Text('Reservar mi boleto +',
-                    style: TextStyle(fontSize: 25)),
+                    style: TextStyle(fontSize: 15)),
                 color: Colors.cyan[600],
-                onPressed: () {},
+                onPressed: () {
+                  final datamyre = DataMyre(paramU: name, paramC: correo);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Reservations(datamyre: datamyre)),
+                  );
+                },
               ),
               Divider(),
               Divider(),

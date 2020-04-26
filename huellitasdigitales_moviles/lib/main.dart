@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huellitasdigitales_moviles/src/pages/home_page.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {

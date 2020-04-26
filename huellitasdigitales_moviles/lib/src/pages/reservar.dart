@@ -126,21 +126,34 @@ class Reservations extends StatelessWidget {
             children: <Widget>[
               Text(
                 "Nueva Reservacion",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 20),
               ),
               Divider(),
               reservar(),
-              Divider(),
+            Divider(),
+                 CupertinoButton(
+                  child: Text('Realizar reservacion.', style: TextStyle(fontSize: 18),),
+                  color: Colors.lightGreen,
+                   onPressed: () {},
+                   
+                  ),
+                   Divider(),
+                   CupertinoButton(
+                  child: Text('Cancelar.', style: TextStyle(fontSize: 18),),
+                  color: Colors.redAccent,
+                   onPressed: () {},
+                  ),
+                  SizedBox(height: 5),
             
               Divider(),
               SizedBox(height: 5),
               Text(
                 "San Miguel, El Salvador, Todos los derechos reservados.",
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 12),
               ),
               Text(
                 "© Huellitas Digitales, 2020",
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 12),
               ),
               SizedBox(height: 2),
             ],
@@ -152,7 +165,7 @@ class Reservations extends StatelessWidget {
     if (name != null) {
       return new Container(
           child: new UserAccountsDrawerHeader(
-            accountName: new Text('Us: $name', style: TextStyle(fontSize: 25)),
+            accountName: new Text('Us: $name', style: TextStyle(fontSize: 20)),
             accountEmail: new Text('Correo $correo'),
             currentAccountPicture: new CircleAvatar(
                 backgroundImage: AssetImage("assets/images/pp.jpg")),
@@ -171,21 +184,62 @@ class Reservations extends StatelessWidget {
   }
 
   Widget reservar() {
-    return Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-      
-      SizedBox(width: 50),
-   
-     
-      CupertinoButton(
-        child: Text(
-          'Verificar',
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TextFormField(
+          textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          maxLength: 50,
+          textCapitalization: TextCapitalization.sentences,
+          decoration: InputDecoration(
+             border: InputBorder.none,
+              hintText: '25/12/2020',
+            icon: Icon(Icons.calendar_today),
+            labelText: 'Ingrese fecha',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
+          ),
         ),
-        color: Colors.cyan[700],
-        onPressed: () {
-          // Navega a la segunda ruta cuando se pulsa.
-        },
-      ),
-    ]);
+        SizedBox(width: 50),
+        TextFormField(
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.number,
+          maxLines: 1,
+          maxLength: 25,
+          decoration: InputDecoration(
+            hintText: '1',
+            icon: Icon(Icons.card_giftcard),
+            labelText: 'Cantidad De boletos',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
+          ),
+        ),
+        TextFormField(
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+          keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          maxLength: 6,
+          decoration: InputDecoration(
+            icon: Icon(Icons.timer),
+            hintText: '2:00',
+            labelText: 'Hora de llega',
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
+          ),
+        ),
+       
+        CupertinoButton(
+          child: Text('Verificar', style: TextStyle(fontSize: 18),),
+          color: Colors.cyan[700],
+          onPressed: () {
+            // Navega a la segunda ruta cuando se pulsa.
+            
+          },
+        ),
+      ]
+    );
+   
   }
 }
