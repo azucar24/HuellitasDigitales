@@ -28,16 +28,22 @@ class MyReservations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(this.datap != null && this.datanewreserv == null && this.datamyac == null){
+    if (this.datap != null &&
+        this.datanewreserv == null &&
+        this.datamyac == null) {
       name = this.datap.paramU;
       correo = this.datap.paramC;
-    }else if(this.datanewreserv != null && this.datap == null && this.datamyac == null){
+    } else if (this.datanewreserv != null &&
+        this.datap == null &&
+        this.datamyac == null) {
       name = this.datanewreserv.paramU;
       correo = this.datanewreserv.paramC;
-    }else if(this.datamyac != null && this.datap == null && this.datanewreserv == null){
+    } else if (this.datamyac != null &&
+        this.datap == null &&
+        this.datanewreserv == null) {
       name = this.datamyac.paramU;
       correo = this.datamyac.paramC;
-    }else{
+    } else {
       name = "Nada";
       correo = "Nada";
     }
@@ -52,18 +58,14 @@ class MyReservations extends StatelessWidget {
             child: ListView(children: <Widget>[
           datosHeader(context), //Llamamos la cabecera del menu desplegable
           new ListTile(
-            title:
-                new Text('Inicio', style: TextStyle(fontSize: 20)),
+            title: new Text('Inicio', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.home),
             onTap: () {
-
-              final datamyre = DataMyre(
-                  paramU: name,
-                  paramC: correo 
-              );
+              final datamyre = DataMyre(paramU: name, paramC: correo);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PrincipalPage(datamyre:datamyre)),
+                MaterialPageRoute(
+                    builder: (context) => PrincipalPage(datamyre: datamyre)),
               );
             },
           ),
@@ -76,13 +78,11 @@ class MyReservations extends StatelessWidget {
                 new Text('Nueva Reservacion.', style: TextStyle(fontSize: 20)),
             leading: Icon(Icons.add_comment),
             onTap: () {
-              final datamyre = DataMyre(
-                  paramU: name,
-                  paramC: correo 
-              );
+              final datamyre = DataMyre(paramU: name, paramC: correo);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Reservations(datamyre:datamyre)),
+                MaterialPageRoute(
+                    builder: (context) => Reservations(datamyre: datamyre)),
               );
             },
           ),
@@ -96,13 +96,11 @@ class MyReservations extends StatelessWidget {
             onTap: () {
               /*print(name);
                 print(correo);*/
-              final datamyre = DataMyre(
-                  paramU: name,
-                  paramC: correo 
-              );
+              final datamyre = DataMyre(paramU: name, paramC: correo);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyAcount(datamyre:datamyre)),
+                MaterialPageRoute(
+                    builder: (context) => MyAcount(datamyre: datamyre)),
               );
             },
           ),
@@ -127,32 +125,34 @@ class MyReservations extends StatelessWidget {
             children: <Widget>[
               Text(
                 "Mis Reservaciones",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 20),
               ),
               Divider(),
               listarreservacions(),
               Divider(),
-
               Divider(),
               CupertinoButton(
                 child: Text('Reservar mi boleto +',
-                    style: TextStyle(fontSize: 25)),
+                    style: TextStyle(fontSize: 18)),
                 color: Colors.cyan[600],
-                
-                onPressed: () {},
-                
+                onPressed: () {
+                  final datamyre = DataMyre(paramU: name, paramC: correo);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Reservations(datamyre: datamyre)),
+              );
+                },
               ),
-
-         
               Divider(),
               SizedBox(height: 5),
               Text(
                 "San Miguel, El Salvador, Todos los derechos reservados.",
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 12),
               ),
               Text(
                 "© Huellitas Digitales, 2020",
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 12),
               ),
               SizedBox(height: 2),
             ],
@@ -164,7 +164,7 @@ class MyReservations extends StatelessWidget {
     if (name != null) {
       return new Container(
           child: new UserAccountsDrawerHeader(
-            accountName: new Text('Us: $name', style: TextStyle(fontSize: 25)),
+            accountName: new Text('Us: $name', style: TextStyle(fontSize: 20)),
             accountEmail: new Text('Correo $correo'),
             currentAccountPicture: new CircleAvatar(
                 backgroundImage: AssetImage("assets/images/pp.jpg")),
@@ -183,21 +183,26 @@ class MyReservations extends StatelessWidget {
   }
 
   Widget listarreservacions() {
-    return DataTable(
-      columns: [
-        DataColumn(label: Text('Nombre')),
-        DataColumn(label: Text('Fecha')),
-        DataColumn(label: Text('Hora')),
-        DataColumn(label: Text('Opciones')),
-      ],
-      rows: [
-        DataRow(cells: [
-          DataCell(Text('Salvador Azucar')),
-          DataCell(Text('20/12/2020')),
-          DataCell(Text('2:00 pm')),
-          DataCell(IconButton(icon: Icon(Icons.delete), onPressed: () {},))
-        ]),
-      ],
-    );
+    return DataTable(sortColumnIndex: 2, sortAscending: true, columns: [
+      DataColumn(
+        label: Text('Boletos'),
+        numeric: true,
+      ),
+      DataColumn(label: Text('Fecha'), numeric: true),
+      DataColumn(label: Text('Hora'), numeric: true),
+      DataColumn(
+        label: Text('Opciones'),
+      )
+    ], rows: [
+      DataRow(selected: true, cells: [
+        DataCell(Text('5')),
+        DataCell(Text('24/11/2020')),
+        DataCell(Text('14.00 ')),
+        DataCell(IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () {},
+        ))
+      ]),
+    ]);
   }
 }
