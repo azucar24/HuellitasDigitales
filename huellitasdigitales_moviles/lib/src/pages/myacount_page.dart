@@ -64,9 +64,6 @@ class MyAcount extends StatelessWidget {
               title: new Text('Inicio',style: TextStyle(fontSize: 20)),
               leading: Icon(Icons.home),
               onTap: (){
-                /*print(name);
-                print(correo);*/
-                
                 final datamyac = DataMyac(
                   paramU: name,
                   paramC: correo 
