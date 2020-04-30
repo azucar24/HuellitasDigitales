@@ -225,7 +225,7 @@ class Reservations extends StatelessWidget {
           decoration: InputDecoration(
             icon: Icon(Icons.timer),
             hintText: '2:00',
-            labelText: 'Hora de llega',
+            labelText: 'Hora de llegada',
             contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5)
           ),
         ),
