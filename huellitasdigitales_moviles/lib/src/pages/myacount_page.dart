@@ -134,7 +134,7 @@ class MyAcount extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Text("My Acount", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
-                  Image(image:AssetImage("assets/images/pp.jpg"), width:300,height:300),                  
+                  Image(image:AssetImage("assets/images/pp.jpeg"), width:300,height:300),                  
                   Divider(),
                  CupertinoButton(
                   child: Text('Actualizar.', style: TextStyle(fontSize: 25),),
