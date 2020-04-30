@@ -168,7 +168,7 @@ class Reservations extends StatelessWidget {
             accountName: new Text('Us: $name', style: TextStyle(fontSize: 20)),
             accountEmail: new Text('Correo $correo'),
             currentAccountPicture: new CircleAvatar(
-                backgroundImage: AssetImage("assets/images/pp.jpg")),
+                backgroundImage: AssetImage("assets/images/pp.jpeg")),
           ),
           color: Colors.black45);
     } else {
@@ -177,7 +177,7 @@ class Reservations extends StatelessWidget {
             accountName: new Text('Usuario vacios'),
             accountEmail: new Text('Correo vacios'),
             currentAccountPicture: new CircleAvatar(
-                backgroundImage: AssetImage("assets/images/pp.jpg")),
+                backgroundImage: AssetImage("assets/images/pp.jpeg")),
           ),
           color: Colors.blueGrey);
     }

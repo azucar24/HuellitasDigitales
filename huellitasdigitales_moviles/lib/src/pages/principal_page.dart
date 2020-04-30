@@ -149,7 +149,7 @@ class PrincipalPage extends StatelessWidget {
               child: Column(
             children: <Widget>[
               Image(
-                  image: AssetImage("assets/images/pp.jpg"),
+                  image: AssetImage("assets/images/pp.jpeg"),
                   width: 700,
                   height: 300),
               Divider(),
@@ -198,7 +198,7 @@ class PrincipalPage extends StatelessWidget {
             accountName: new Text('Us: $name', style: TextStyle(fontSize: 25)),
             accountEmail: new Text('Correo $correo'),
             currentAccountPicture: new CircleAvatar(
-                backgroundImage: AssetImage("assets/images/pp.jpg")),
+                backgroundImage: AssetImage("assets/images/pp.jpeg")),
           ),
           color: Colors.black45);
     } else {
@@ -207,7 +207,7 @@ class PrincipalPage extends StatelessWidget {
             accountName: new Text('Usuario vacios'),
             accountEmail: new Text('Correo vacios'),
             currentAccountPicture: new CircleAvatar(
-                backgroundImage: AssetImage("assets/images/pp.jpg")),
+                backgroundImage: AssetImage("assets/images/pp.jpeg")),
           ),
           color: Colors.blueGrey);
     }

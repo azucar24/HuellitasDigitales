@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
               child: Column(
             children: <Widget>[
               Image(
-                  image: AssetImage("assets/images/pp.jpg"),
+                  image: AssetImage("assets/images/pp.jpeg"),
                   width: 700,
                   height: 300),
               Divider(),
@@ -239,7 +239,7 @@ class UserAdd extends StatelessWidget {
                 child: Column(
               children: <Widget>[
                 Image(
-                    image: AssetImage("assets/images/pp.jpg"),
+                    image: AssetImage("assets/images/pp.jpeg"),
                     width: 700,
                     height: 150),
                 Text(

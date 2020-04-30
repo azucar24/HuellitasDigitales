@@ -55,7 +55,7 @@ class MyAcount extends StatelessWidget {
                 new UserAccountsDrawerHeader(
                   accountName : new Text('Usuario $name',style: TextStyle(fontSize: 25)), 
                   accountEmail: new Text('Correo $correo',style: TextStyle(fontSize: 20)),
-                  currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpg")),
+                  currentAccountPicture: new CircleAvatar(backgroundImage: AssetImage("assets/images/pp.jpeg")),
                 ),
               color: Colors.blueGrey
             ),

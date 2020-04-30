@@ -16,7 +16,7 @@ class UpdateDataUser extends StatelessWidget{
             Center(
               child: Column(
                 children: <Widget>[
-                  Image(image:AssetImage("assets/images/pp.jpg"), width:700,height:150),
+                  Image(image:AssetImage("assets/images/pp.jpeg"), width:700,height:150),
                   Text("Actualiza tus datos:", style: TextStyle(fontSize: 30),),
                   Divider(),
                   cajas(),
