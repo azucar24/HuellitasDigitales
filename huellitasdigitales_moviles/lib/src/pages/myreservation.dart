@@ -185,6 +185,10 @@ class MyReservations extends StatelessWidget {
   Widget listarreservacions() {
     return DataTable(sortColumnIndex: 2, sortAscending: true, columns: [
       DataColumn(
+        label: Text('Responsable'),
+       
+      ),
+      DataColumn(
         label: Text('Boletos'),
         numeric: true,
       ),
@@ -195,6 +199,7 @@ class MyReservations extends StatelessWidget {
       )
     ], rows: [
       DataRow(selected: true, cells: [
+ DataCell(Text('Yonathan Ortiz')),
         DataCell(Text('5')),
         DataCell(Text('24/11/2020')),
         DataCell(Text('14.00 ')),
