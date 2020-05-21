@@ -1,0 +1,17 @@
+CREATE TABLE recursos_fisicos(
+   id NUMBER(11) not null constraint recursos_fisicos_pk primary key,
+   recurso_name varchar(50),
+   sala_asignada NUMBER(11),
+   recurso_codigo varchar(20)
+);
+alter table recursos_fisicos add constraint recursos_fisicos_fk foreign key (sala_asignada) references salas (id);
+insert into recursos_fisicos values(1,'Proyector Epsom asdf1', 1, 'huellitas_proyec1');
+insert into recursos_fisicos values(2,'Mesa soporte', 1, 'huellitas_sop1');
+insert into recursos_fisicos values(3,'Proyector Epsom asdf1', 2, 'huellitas_proyec2');
+insert into recursos_fisicos values(4,'Mesa soporte', 2, 'huellitas_sop2');
+insert into recursos_fisicos values(5,'Proyector Epsom asdf1', 3, 'huellitas_proyec3');
+insert into recursos_fisicos values(6,'Mesa soporte', 3, 'huellitas_sop3');
+insert into recursos_fisicos values(7,'Proyector Epsom asdf1', 4, 'huellitas_proyec4');
+insert into recursos_fisicos values(8,'Mesa soporte', 4, 'huellitas_sop4');
+select * from recursos_fisicos; 
+select count(*) from recursos_fisicos where recurso_name='Proyector Epsom asdf1';

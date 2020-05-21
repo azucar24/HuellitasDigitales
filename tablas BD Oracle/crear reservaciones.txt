@@ -1,0 +1,9 @@
+CREATE TABLE reservaciones(
+   id NUMBER(11) not null constraint reservaciones_pk primary key,
+   reservacion_cant_personas NUMBER(11),
+   reservacion_estado char(1),
+   reservacion_dui_cliente NUMBER(9),
+   reservacion_presentacion_id NUMBER(11)
+);
+alter table reservaciones add constraint reservaciones_clientes_fk foreign key (reservacion_dui_cliente) references clientes (cliente_dui);
+alter table reservaciones add constraint reservaciones_present_fk foreign key (reservacion_presentacion_id) references presentaciones(id);

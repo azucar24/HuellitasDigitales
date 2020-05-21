@@ -1,0 +1,9 @@
+CREATE TABLE presentaciones(
+   id number not null constraint presentacion_pk primary key,
+   presentacion_nombre VARCHAR2(25)
+);
+insert into presentaciones values(1, 'Leones');
+insert into presentaciones values(2, 'Dinosaurios');
+insert into presentaciones values(3, 'Aves');
+insert into presentaciones values(4, 'Reptiles');
+select * from presentaciones;
