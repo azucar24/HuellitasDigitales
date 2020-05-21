@@ -2,6 +2,8 @@ CREATE TABLE reservaciones(
    id NUMBER(11) not null constraint reservaciones_pk primary key,
    reservacion_cant_personas NUMBER(11),
    reservacion_estado char(1),
+   reservacion_hora VARCHAR2(15),
+   reservacion_fecha VARCHAR2(15),
    reservacion_dui_cliente NUMBER(9),
    reservacion_presentacion_id NUMBER(11)
 );
