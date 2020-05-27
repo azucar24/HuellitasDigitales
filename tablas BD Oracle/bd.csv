@@ -1,0 +1,105 @@
+CREATE TABLE bitacora(
+   id number not null constraint bitacora_pk primary key,
+   accion VARCHAR2(25),
+   responsable VARCHAR2(50),
+   fecha_accion date default sysdate
+);
+
+select * from bitacora;
+
+insert into bitacora values(1,'borrar','yonathan', DATE '2020-5-17');
+
+CREATE TABLE presentaciones(
+   id number not null constraint presentacion_pk primary key,
+   presentacion_nombre VARCHAR2(25)
+);
+insert into presentaciones values(1, 'Leones');
+insert into presentaciones values(2, 'Dinosaurios');
+insert into presentaciones values(3, 'Aves');
+insert into presentaciones values(4, 'Reptiles');
+select * from presentaciones;
+
+CREATE TABLE salas(
+   sala_num number not null constraint salas_pk primary key,
+   sala_capacidad NUMBER(11)
+);
+insert into salas values(1,25);
+insert into salas values(2,30);
+insert into salas values(3,25);
+insert into salas values(4,30);
+select * from salas;
+
+CREATE TABLE cartelera(
+   id number not null constraint cartelera_pk  primary key,
+   nombre_exhibicion_id NUMBER(11),
+   hora_exhibicion VARCHAR2(15),
+   fecha_exhibicion VARCHAR2(15),
+   sala_exhibicion_id NUMBER(11),
+   sala_capacidad_restante NUMBER(11)
+);
+alter table cartelera add constraint cart_exhibi_fk foreign key (nombre_exhibicion_id) references presentaciones (id);
+alter table cartelera add constraint cart_sala_fk foreign key (sala_exhibicion_id) references salas (id);
+insert into cartelera values(1, 1, '9:00 AM', 'Lunes 18', 1);
+insert into cartelera values(2, 2, '9:00 AM', 'Lunes 18', 2);
+insert into cartelera values(3, 3, '9:00 AM', 'Lunes 18', 3);
+insert into cartelera values(4, 4, '9:00 AM', 'Lunes 18', 4);
+select * from cartelera;
+select cartelera.hora_exhibicion, cartelera.fecha_exhibicion, presentaciones.presentacion_nombre from cartelera inner join presentaciones on nombre_exhibicion_id=presentaciones.id;
+
+CREATE TABLE clientes(
+   cliente_clave varchar(15),
+   cliente_correo varchar(50),
+   cliente_nombre varchar(50),
+   cliente_sexo char(1),
+   cliente_telefono NUMBER(8),
+   cliente_user varchar(15),
+   cliente_dui varchar(9) not null constraint clientes_pk primary key
+);
+insert into clientes values(1, 'password', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'M',75641557, 'yona', '055384768');
+select * from clientes;
+
+
+CREATE TABLE recursos_fisicos(
+   id NUMBER(11) not null constraint recursos_fisicos_pk primary key,
+   recurso_name varchar(50),
+   sala_asignada NUMBER(11),
+   recurso_codigo varchar(20)
+);
+alter table recursos_fisicos add constraint recursos_fisicos_fk foreign key (sala_asignada) references salas (id);
+insert into recursos_fisicos values(1,'Proyector Epsom asdf1', 1, 'huellitas_proyec1');
+insert into recursos_fisicos values(2,'Mesa soporte', 1, 'huellitas_sop1');
+insert into recursos_fisicos values(3,'Proyector Epsom asdf1', 2, 'huellitas_proyec2');
+insert into recursos_fisicos values(4,'Mesa soporte', 2, 'huellitas_sop2');
+insert into recursos_fisicos values(5,'Proyector Epsom asdf1', 3, 'huellitas_proyec3');
+insert into recursos_fisicos values(6,'Mesa soporte', 3, 'huellitas_sop3');
+insert into recursos_fisicos values(7,'Proyector Epsom asdf1', 4, 'huellitas_proyec4');
+insert into recursos_fisicos values(8,'Mesa soporte', 4, 'huellitas_sop4');
+select * from recursos_fisicos; 
+select count(*) from recursos_fisicos where recurso_name='Proyector Epsom asdf1';
+
+
+
+CREATE TABLE reservaciones(
+   id NUMBER(11) not null constraint reservaciones_pk primary key,
+   reservacion_cant_personas NUMBER(11),
+   reservacion_estado char(1),
+   reservacion_hora VARCHAR2(15),
+   reservacion_fecha VARCHAR2(15),
+   reservacion_dui_cliente NUMBER(9),
+   reservacion_presentacion_id NUMBER(11)
+);
+alter table reservaciones add constraint reservaciones_clientes_fk foreign key (reservacion_dui_cliente) references clientes (cliente_dui);
+alter table reservaciones add constraint reservaciones_present_fk foreign key (reservacion_presentacion_id) references presentaciones(id);
+
+CREATE TABLE usuarios(
+   usuario_clave varchar(15),
+   usuario_correo varchar(50),
+   usuario_nombre varchar(50),
+   usuario_rol varchar(15),
+   usuario_sexo char(1),
+   usuario_telefono NUMBER(8),
+   usuario_user varchar(15),
+   usuario_dui varchar(11) not null constraint usuarios_pk primary key
+);
+insert into usuarios values(1, 'tu90mama', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'Admin', 'M', 75641557, 'yona', 055384768);
+select * from usuarios;
