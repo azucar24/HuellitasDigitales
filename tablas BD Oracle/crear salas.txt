@@ -1,9 +1,0 @@
-CREATE TABLE salas(
-   sala_num number not null constraint salas_pk primary key,
-   sala_capacidad NUMBER(11)
-);
-insert into salas values(1,25);
-insert into salas values(2,30);
-insert into salas values(3,25);
-insert into salas values(4,30);
-select * from salas;

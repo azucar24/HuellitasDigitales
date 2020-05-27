@@ -1,0 +1,264 @@
+/*PROCEDIMIENTOS ALMACENADOS, TABLA PRESENTACIONES*/
+--PROCEDURE ADD
+create or replace PROCEDURE "CREAR_PRESENTACIONES"(
+    C_nombre presentaciones.presentacion_nombre%type,
+    C_tipo presentaciones.presentacion_tipo_proyeccion%type,
+    MENSAJE OUT varchar)
+AS
+    id_presentacion presentaciones.presentaciones_id%type := C_nombre || C_tipo;
+BEGIN
+    --DBMS_OUTPUT.PUT_LINE(id_presentacion);
+    --Sentenses
+    INSERT INTO presentaciones VALUES(id_presentacion, C_nombre, C_tipo, 'on');
+    MENSAJE := 'Agregado exitosamente';
+    DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        MENSAJE := 'No puedes registrar una prsentacion con datos duplicados';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ROLLBACK;
+END CREAR_PRESENTACIONES;
+
+--PROCEDURE DELETE
+create or replace PROCEDURE "DELETE_PRESENTACION"(
+   C_id presentaciones.presentaciones_id%type,
+   MENSAJE OUT varchar)
+IS
+
+BEGIN
+   --Sentenses
+   DELETE FROM presentaciones WHERE presentaciones_id=C_id;
+    IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'Error en el proceso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        MENSAJE := 'Borrado exitoso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    END IF;
+    COMMIT;
+END DELETE_PRESENTACION;
+
+--PROCEDURE UPDATE
+create or replace PROCEDURE "UDP_PRESENTACION"(
+   C_id presentaciones.presentaciones_id%type,
+   C_nombre presentaciones.presentacion_nombre%type,
+   C_tipo presentaciones.presentacion_tipo_proyeccion%type,
+   C_estado presentaciones.presentacion_estado%type,
+   MENSAJE OUT varchar)
+AS
+    validation_llave  presentaciones%ROWTYPE;
+    new_id presentaciones.presentaciones_id%type;
+BEGIN
+   --Sentenses
+   --Validando parametros
+    SELECT * INTO validation_llave FROM presentaciones WHERE presentaciones_id=C_id;
+    
+    if validation_llave.presentacion_nombre = C_nombre AND validation_llave.presentacion_tipo_proyeccion = C_tipo then
+        UPDATE presentaciones SET presentaciones_id=NVL(C_id, presentaciones_id), presentacion_nombre=NVL(C_nombre, presentacion_nombre), 
+        presentacion_tipo_proyeccion=NVL(C_tipo, presentacion_tipo_proyeccion), presentacion_estado=NVL(C_estado, presentacion_estado) WHERE presentaciones_id = C_id;
+        IF SQL%ROWCOUNT = 0 THEN
+            MENSAJE := 'No señor, este ID no existe';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ELSE
+            MENSAJE := 'Actualizacion el estado';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    elsif validation_llave.presentacion_tipo_proyeccion != C_tipo AND validation_llave.presentacion_nombre = C_nombre then
+        new_id := C_nombre || C_tipo;
+        UPDATE presentaciones SET presentaciones_id=new_id, presentacion_nombre=NVL(C_nombre, presentacion_nombre), 
+        presentacion_tipo_proyeccion=NVL(C_tipo, presentacion_tipo_proyeccion), presentacion_estado=NVL(C_estado, presentacion_estado) WHERE presentaciones_id = C_id;
+        IF SQL%ROWCOUNT = 0 THEN
+            MENSAJE := 'No señor, este ID no existe';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ELSE
+            MENSAJE := 'Actualizacion del tipo, exitoso';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    elsif validation_llave.presentacion_nombre != C_nombre AND validation_llave.presentacion_tipo_proyeccion = C_tipo then
+        new_id := C_nombre || C_tipo;
+        UPDATE presentaciones SET presentaciones_id=new_id, presentacion_nombre=NVL(C_nombre, presentacion_nombre), 
+        presentacion_tipo_proyeccion=NVL(C_tipo, presentacion_tipo_proyeccion), presentacion_estado=NVL(C_estado, presentacion_estado) WHERE presentaciones_id = C_id;
+        IF SQL%ROWCOUNT = 0 THEN
+            MENSAJE := 'No señor, este ID no existe';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ELSE
+            MENSAJE := 'Actualizacion del nombre, exitosa';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    else
+        MENSAJE := 'Ninguna';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    end if;
+    COMMIT;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        MENSAJE := 'No señor, este ID no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    WHEN OTHERS THEN
+        MENSAJE := 'No señor, esta presentacion ya existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END UDP_PRESENTACION;
+
+/*PROCEDIMIENTOS ALMACENADOS, TABLA SALAS*/
+--PROCEDURE ADD
+create or replace PROCEDURE "CREAR_SALAS"(
+    C_capacidad salas.sala_capacidad%type,
+    C_nombre salas.sala_nombre%type,
+    MENSAJE OUT varchar)
+AS
+BEGIN
+    --Sentences
+    INSERT INTO salas VALUES(C_capacidad, C_nombre);
+    MENSAJE := 'Agregado exitosamente';
+    DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        MENSAJE := 'No señor, el nombre de la sala ya esta registrado';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END CREAR_SALAS;
+--PROCEDURE DELETE
+create or replace PROCEDURE "DELETE_SALA"(
+   C_nombre presentaciones.presentaciones_id%type,
+   MENSAJE OUT varchar)
+IS
+
+BEGIN
+   --Sentenses
+   DELETE FROM salas WHERE sala_nombre=C_nombre;
+    IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'Error en el proceso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        MENSAJE := 'Borrado exitoso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    END IF;
+    COMMIT;
+END DELETE_SALA;
+--PROCEDURE UPDATE
+create or replace PROCEDURE "UDP_SALA"(
+    C_id_name salas.sala_nombre%type,
+    C_capacidad salas.sala_capacidad%type,
+    C_nombre salas.sala_nombre%type,
+    MENSAJE OUT varchar)
+AS
+BEGIN
+    --Sentenses
+    UPDATE salas SET sala_capacidad=NVL(C_capacidad, sala_capacidad), sala_nombre=NVL(C_nombre, sala_nombre) WHERE sala_nombre = C_id_name; 
+    IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'No señor, ese nombre de sala no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        MENSAJE := 'Actualizacion exitosa';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    END IF;
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        MENSAJE := 'No señor, este nombre de sala ya existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END UDP_SALA;
+
+/*PROCEDIMIENTOS ALMACENADOS, TABLA CARTELERA*/
+--PROCEDURE ADD
+create or replace PROCEDURE "CREAR_CARTELERA"(
+    C_id_presentacion cartelera.nombre_presentacion_id%type,
+    C_hora cartelera.hora_exhibicion%type,
+    C_fecha cartelera.fecha_exhibicion%type,
+    C_sala_nombre cartelera.sala_exhibicion_id%type,
+    MENSAJE OUT varchar)
+AS
+    cartelera_id cartelera.cartelera_id%type;
+    sala_capacidad_restante cartelera.sala_capacidad_restante%type;
+    
+    --Variables para validacion
+    validation_presentacion presentaciones%ROWTYPE;
+    validation_sala salas%ROWTYPE;
+BEGIN
+    --validamos requisitos
+    SELECT * INTO validation_presentacion FROM presentaciones WHERE presentaciones_id=C_id_presentacion;
+    SELECT * INTO validation_sala FROM salas WHERE sala_nombre=C_sala_nombre;
+    --Sentences
+    sala_capacidad_restante := validation_sala.sala_capacidad;
+    --Genereamos id
+    cartelera_id := C_sala_nombre || C_id_presentacion || C_fecha || C_hora;
+    INSERT INTO cartelera VALUES(cartelera_id, C_id_presentacion, C_hora, C_fecha, C_sala_nombre, sala_capacidad_restante, 'on');
+    MENSAJE := 'Cartelera agregada exitosamente';
+    DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    COMMIT;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        MENSAJE := 'No señor, el nombre de la sala o presentacion no existen';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    WHEN OTHERS THEN
+        MENSAJE := 'No señor, esta cartelera ya esta registrada';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END CREAR_CARTELERA;
+--PROCEDURE DELETE
+create or replace PROCEDURE "DELETE_CARTELERA"(
+   C_id cartelera.cartelera_id%type,
+   MENSAJE OUT varchar)
+IS
+
+BEGIN
+   --Sentenses
+   DELETE FROM cartelera WHERE cartelera_id=C_id;
+    IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'Error en el proceso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        MENSAJE := 'Borrado exitoso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    END IF;
+    COMMIT;
+END DELETE_CARTELERA;
+--PROCEDURE UPDATE
+create or replace PROCEDURE "UDP_CARTELERA"(
+    C_id cartelera.cartelera_id%type,
+    C_id_presentacion cartelera.nombre_presentacion_id%type,
+    C_hora cartelera.hora_exhibicion%type,
+    C_fecha cartelera.fecha_exhibicion%type,
+    C_sala_name cartelera.sala_exhibicion_id%type,
+    C_sala_capacidad_restante cartelera.sala_capacidad_restante%type,
+    C_cartelera_estado cartelera.cartelera_estado%type,
+    MENSAJE OUT varchar)
+AS
+    cartelera_new_id cartelera.cartelera_id%type;
+    validation_id cartelera%ROWTYPE;
+BEGIN
+    --Validamos el id
+    cartelera_new_id := C_sala_name || C_id_presentacion || C_fecha || C_hora;
+    --Validamos campos
+    SELECT * INTO validation_id FROM cartelera WHERE cartelera_id=C_id;
+    --Sentenses
+    if cartelera_new_id = C_id AND validation_id.hora_exhibicion = C_hora AND validation_id.fecha_exhibicion = C_fecha then
+        MENSAJE := 'No señor, no esta enviando informacion nueva';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    else
+        UPDATE cartelera SET cartelera_id=cartelera_new_id, nombre_presentacion_id=NVL(C_id_presentacion, nombre_presentacion_id), 
+        hora_exhibicion=NVL(C_hora, hora_exhibicion), fecha_exhibicion=NVL(C_fecha, fecha_exhibicion), sala_exhibicion_id=NVL(C_sala_name, sala_exhibicion_id),
+        sala_capacidad_restante=NVL(C_sala_capacidad_restante, sala_capacidad_restante), cartelera_estado=NVL(C_cartelera_estado ,cartelera_estado) 
+        WHERE cartelera_id = C_id; 
+        IF SQL%ROWCOUNT = 0 THEN
+            MENSAJE := 'No señor, ese id de cartelera no existe';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+          ELSE
+            MENSAJE := 'Actualizacion exitosa';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    end if;
+    COMMIT;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        MENSAJE := 'No señor, este id de cartelera no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END UDP_CARTELERA;

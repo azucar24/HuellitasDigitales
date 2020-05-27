@@ -1,0 +1,152 @@
+/*CREACION DE TRIGGERS, TABLA PRESENTACIONES*/
+--TRIGGER ADD
+CREATE OR REPLACE TRIGGER add_presentacion_bitacora BEFORE INSERT ON presentaciones FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'CREATED', 'presentaciones', responsable, fecha_creacion, '', :NEW.presentaciones_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER DELETE
+CREATE OR REPLACE TRIGGER delete_presentacion_bitacora AFTER DELETE ON presentaciones FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.presentaciones_id || ' Nombre:' || :OLD.presentacion_nombre || ' Tipo:' || 
+    :OLD.presentacion_tipo_proyeccion || ' Estado:' || :OLD.presentacion_estado;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'DELETE', 'presentaciones', responsable, fecha_creacion, registros_anteriores, :OLD.presentaciones_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER UPDATE
+CREATE OR REPLACE TRIGGER update_presentacion_bitacora AFTER UPDATE ON presentaciones FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.presentaciones_id || ' Nombre:' || :OLD.presentacion_nombre || ' Tipo:' || 
+    :OLD.presentacion_tipo_proyeccion || ' Estado:' || :OLD.presentacion_estado;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'UPDATE', 'presentaciones', responsable, fecha_creacion, registros_anteriores, :NEW.presentaciones_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+
+/*CREACION DE TRIGGERS, TABLA PRESENTACIONES*/
+--TRIGGER ADD
+CREATE OR REPLACE TRIGGER add_sala_bitacora BEFORE INSERT ON salas FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'CREATED', 'Salas', responsable, fecha_creacion, '', :NEW.sala_nombre);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER DELETE
+CREATE OR REPLACE TRIGGER delete_sala_bitacora AFTER DELETE ON salas FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Capacidad:' || :OLD.sala_capacidad || ' Nombre:' || :OLD.sala_nombre;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'DELETE', 'Salas', responsable, fecha_creacion, registros_anteriores, :OLD.sala_nombre);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER UPDATE
+CREATE OR REPLACE TRIGGER update_salas_bitacora AFTER UPDATE ON salas FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Capacidad:' || :OLD.sala_capacidad || ' Nombre:' || :OLD.sala_nombre;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'UPDATE', 'Salas', responsable, fecha_creacion, registros_anteriores, :NEW.sala_nombre);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+
+/*CREACION DE TRIGGERS, TABLA CARTELERA*/
+--TRIGGER ADD
+CREATE OR REPLACE TRIGGER add_cartelera_bitacora BEFORE INSERT ON cartelera FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'CREATED', 'Cartelera', responsable, fecha_creacion, '', :NEW.cartelera_id);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER DELETE
+CREATE OR REPLACE TRIGGER delete_cartelera_bitacora AFTER DELETE ON cartelera FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.cartelera_id || ' Presentacion:' || :OLD.nombre_presentacion_id || ' Hora:' 
+    || :OLD.hora_exhibicion || ' Fecha:' || :OLD.fecha_exhibicion || ' Sala:' || :OLD.sala_exhibicion_id || ' Capacidad restante:' || :OLD.sala_capacidad_restante 
+    || ' Estado:' || :OLD.cartelera_estado;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'DELETE', 'Cartelera', responsable, fecha_creacion, registros_anteriores, :OLD.cartelera_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER UPDATE
+CREATE OR REPLACE TRIGGER update_cartelera_bitacora AFTER UPDATE ON cartelera FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.cartelera_id || ' Presentacion:' || :OLD.nombre_presentacion_id || ' Hora:' || 
+    :OLD.hora_exhibicion || ' Fecha:' || :OLD.fecha_exhibicion || ' Sala:' || :OLD.sala_exhibicion_id || ' Capacidad restante:' || :OLD.sala_capacidad_restante 
+    || ' Estado:' || :OLD.cartelera_estado;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'UPDATE', 'Cartelera', responsable, fecha_creacion, registros_anteriores, :NEW.cartelera_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;

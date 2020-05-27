@@ -1,0 +1,174 @@
+/*============TABLA PRESENTACIONES============================================*/
+CREATE TABLE presentaciones(
+   presentaciones_id            VARCHAR(20) not null constraint presentacion_pk primary key,
+   presentacion_nombre          VARCHAR(25),
+   presentacion_tipo_proyeccion VARCHAR(25),
+   presentacion_estado          VARCHAR(3)
+);
+--LLAMADO AL ADD
+DECLARE
+    param_nombre presentaciones.presentacion_nombre%type := 'Leones';
+    param_tipo presentaciones.presentacion_tipo_proyeccion%type := '3D';
+    param_null varchar(200) := null;
+BEGIN
+    CREAR_PRESENTACIONES(param_nombre, param_tipo, param_null);
+END;
+--LLAMADO AL DELETE
+DECLARE
+    id_presentacion presentaciones.presentaciones_id%type := 'Leones2D';
+    param_null varchar(200) := null;
+BEGIN
+    DELETE_PRESENTACION(id_presentacion, param_null);
+END;
+--LLAMADO AL UPDATE
+DECLARE
+    param_id presentaciones.presentaciones_id%type := 'Leones3D';
+    param_nombre presentaciones.presentacion_tipo_proyeccion%type := 'Leones';
+    param_tipo presentaciones.presentacion_tipo_proyeccion%type := '1D';
+    param_estado presentaciones.presentacion_estado%type := 'on';
+    param_null varchar(200) := null;
+BEGIN
+    UDP_PRESENTACION(param_id, param_nombre, param_tipo, param_estado, param_null);
+END;
+select * from presentaciones;
+
+/*============TABLA SALAS==================================================*/
+CREATE TABLE salas(
+   sala_capacidad NUMBER(11),
+   sala_nombre    VARCHAR(50) not null constraint salas_pk primary key
+);
+--LLAMADO AL ADD
+DECLARE
+    param_capacidad salas.sala_capacidad%type := 30;
+    param_nombre salas.sala_nombre%type := 'Sala 2';
+    param_null varchar(200) := null;
+BEGIN
+    CREAR_SALAS(param_capacidad, param_nombre, param_null);
+END;
+--LLAMADO AL DELETE
+DECLARE
+    sala_nombre salas.sala_nombre%type := 'Sala 1';
+    param_null varchar(200) := null;
+BEGIN
+    DELETE_SALA(sala_nombre, param_null);
+END;
+--LLAMADO AL UPDATE
+DECLARE
+    param_id salas.sala_nombre%type := 'Sala 3';
+    param_nombre salas.sala_nombre%type := 'Sala 2';
+    param_capacidad salas.sala_capacidad%type := 30;
+    param_null varchar(200) := null;
+BEGIN
+    UDP_SALA(param_id, param_capacidad, param_nombre, param_null);
+END;
+
+select * from salas;
+
+/*============TABLA CARTELERA==================================================*/
+CREATE TABLE cartelera(
+   cartelera_id            VARCHAR(75) not null constraint cartelera_pk  primary key,
+   nombre_presentacion_id  VARCHAR(20),
+   hora_exhibicion         VARCHAR(15),
+   fecha_exhibicion        VARCHAR(15),
+   sala_exhibicion_id      VARCHAR(50),
+   sala_capacidad_restante NUMBER(11),
+   cartelera_estado        VARCHAR(3)
+);
+alter table cartelera add constraint cart_exhibi_fk foreign key (nombre_presentacion_id) references presentaciones (presentaciones_id);
+alter table cartelera add constraint cart_sala_fk foreign key (sala_exhibicion_id) references salas (sala_nombre);
+--LLAMADO AL ADD
+DECLARE
+    param_id_presentacion cartelera.nombre_presentacion_id%type := 'Leones3D';
+    param_hora cartelera.hora_exhibicion%type := '9:00 AM';
+    param_fecha cartelera.fecha_exhibicion%type := '26-MAY-20';
+    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 1';
+    param_null varchar(200) := null;
+BEGIN
+    CREAR_CARTELERA(param_id_presentacion, param_hora, param_fecha, param_sala_name, param_null);
+END;
+--LLAMADO AL DELETE
+DECLARE
+    cartelera_id cartelera.cartelera_id%type := 'Sala 1Leones3D26-MAY-209:00 AM';
+    param_null varchar(200) := null;
+BEGIN
+    DELETE_CARTELERA(cartelera_id, param_null);
+END;
+--LLAMADO AL UPDATE
+DECLARE
+    param_id cartelera.cartelera_id%type := 'Sala 1Leones3D26-MAY-209:00 AM';
+    param_id_presentacion cartelera.nombre_presentacion_id%type := 'Leones3D';
+    param_hora cartelera.hora_exhibicion%type := '9:00 AM';
+    param_fecha cartelera.fecha_exhibicion%type := '27-MAY-20';
+    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 1';
+    param_sala_capacidad_restante cartelera.sala_capacidad_restante%type := 30;
+    param_cartelera_estado cartelera.cartelera_estado%type := 'on';
+    param_null varchar(200) := null;
+BEGIN
+    UDP_CARTELERA(param_id, param_id_presentacion, param_hora, param_fecha, param_sala_name, param_sala_capacidad_restante, param_cartelera_estado, param_null);
+END;
+
+select * from cartelera;
+delete from cartelera;
+/*============TABLA CLIENTES==================================================*/
+CREATE TABLE clientes(
+   cliente_clave    VARCHAR(15),
+   cliente_correo   VARCHAR(50),
+   cliente_nombre   VARCHAR(50),
+   cliente_sexo     CHAR(1),
+   cliente_telefono NUMBER(8),
+   cliente_user     VARCHAR(15),
+   cliente_estado   VARCHAR(3),
+   cliente_dui      VARCHAR(9) not null constraint clientes_pk primary key
+);
+insert into clientes values('password', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'M',75641557, 'yona', 'on', '055384768');
+select * from clientes;
+
+/*============TABLA RECURSOS FISICOS==================================================*/
+CREATE TABLE recursos_fisicos(
+   recursosf_id   NUMBER(11) not null constraint recursos_fisicos_pk primary key,
+   recurso_name   VARCHAR(50),
+   sala_asignada  VARCHAR(50),
+   recurso_codigo VARCHAR(20),
+   recurso_estado VARCHAR(3)
+);
+alter table recursos_fisicos add constraint recursos_fisicos_fk foreign key (sala_asignada) references salas (sala_nombre);
+
+/*============TABLA RECURSOS RESERVACIONES==================================================*/
+CREATE TABLE reservaciones(
+   reservacion_id            NUMBER(11) not null constraint reservaciones_pk primary key,
+   reservacion_cant_personas NUMBER(11),
+   reservacion_estado        CHAR(1),
+   reservacion_dui_cliente   VARCHAR(9),
+   reservacion_cartelera_id  VARCHAR(25)
+);
+alter table reservaciones add constraint reservaciones_clientes_fk foreign key (reservacion_dui_cliente) references clientes (cliente_dui);
+alter table reservaciones add constraint reservaciones_carte_fk foreign key (reservacion_cartelera_id) references cartelera(cartelera_id);
+
+/*============TABLA RECURSOS USUARIOS==================================================*/
+CREATE TABLE usuarios(
+   usuario_clave    VARCHAR(15),
+   usuario_correo   VARCHAR(50),
+   usuario_nombre   VARCHAR(50),
+   usuario_rol      VARCHAR(15),
+   usuario_sexo     CHAR(1),
+   usuario_telefono NUMBER(8),
+   usuario_user     VARCHAR(15),
+   usuario_estado   VARCHAR(3),
+   usuario_dui      VARCHAR(11) not null constraint usuarios_pk primary key
+);
+insert into usuarios values('password', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'Admin', 'M',75641557, 'yona', 'on', '055384768');
+select * from usuarios;
+
+/*============TABLA RECURSOS BITACORA==================================================*/
+CREATE TABLE bitacora(
+   bitacora_id             NUMBER(11) not null constraint bitacora_pk primary key,
+   accion                  VARCHAR(25),
+   tabla_afectada          VARCHAR(25),
+   responsable             VARCHAR(50),
+   fecha_accion            DATE default sysdate,
+   registro_anterior       VARCHAR(300),
+   llave_registro_afectado VARCHAR(75)
+);
+alter table bitacora add constraint bitacora_usuarios_fk foreign key (responsable) references usuarios(usuario_dui);
+select * from bitacora;
+delete from bitacora;
