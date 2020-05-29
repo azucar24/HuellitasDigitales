@@ -262,3 +262,91 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE(MENSAJE);
     ROLLBACK;
 END UDP_CARTELERA;
+
+
+/*PROCEDURE CREAR CLIENTES*/
+
+create or replace PROCEDURE "CREAR_CLIENTE"(
+    cliente_clave clientes.cliente_clave%type,
+    cliente_correo clientes.cliente_correo%type,
+    cliente_nombre clientes.cliente_nombre%type,
+    cliente_sexo clientes.cliente_sexo%type,
+    cliente_telefono clientes.cliente_telefono%type,
+    cliente_user clientes.cliente_user%type,
+    cliente_estado clientes.cliente_estado%type,
+    cliente_dui clientes.cliente_dui%type,
+    
+    MENSAJE OUT varchar)
+AS
+BEGIN
+    --DBMS_OUTPUT.PUT_LINE(cliente_dui);
+    --Sentenses
+    INSERT INTO clientes VALUES(cliente_clave, cliente_correo, cliente_nombre, cliente_sexo, cliente_telefono,  cliente_user, 'on' , cliente_dui);
+    MENSAJE := 'Agregado exitosamente';
+    DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        MENSAJE := 'El # de DUi ya existe ';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ROLLBACK;
+END CREAR_CLIENTE;
+
+
+
+--PROCEDURE DELETE CLIENTES
+create or replace PROCEDURE "DELETE_CLIENTE"(
+   cliente_dui clientes.cliente_dui%type,
+   MENSAJE OUT varchar)
+IS
+
+BEGIN
+   --Sentenses
+   DELETE FROM clientes WHERE cliente_dui=cliente_dui;
+    IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'Error en el proceso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        MENSAJE := 'Borrado exitoso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    END IF;
+    COMMIT;
+END DELETE_CLIENTE;
+
+
+--PROCEDURE UPDATE clientes
+create or replace PROCEDURE "UDP_CLIENTE"(
+
+    c_clave clientes.cliente_clave%type,
+    c_correo clientes.cliente_correo%type,
+    c_nombre clientes.cliente_nombre%type,
+    c_sexo clientes.cliente_sexo%type,
+    c_telefono clientes.cliente_telefono%type,
+    c_user clientes.cliente_user%type,
+    c_estado clientes.cliente_estado%type,
+    c_dui clientes.cliente_dui%type,
+    MENSAJE OUT varchar)
+AS
+BEGIN
+    --Sentenses
+    UPDATE clientes SET cliente_clave=NVL(c_clave, cliente_clave), cliente_correo=NVL(c_correo, cliente_correo), cliente_nombre=NVL(c_nombre, cliente_nombre), 
+    cliente_sexo=NVL(c_sexo, cliente_sexo), cliente_telefono=NVL(c_telefono, cliente_telefono), cliente_user=NVL(c_user, cliente_user),
+    cliente_estado=NVL(c_estado, cliente_estado)
+    WHERE cliente_dui = c_dui; 
+    IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'No señor, ese # de DUI no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        MENSAJE := 'Actualizacion exitosa';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    END IF;
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        MENSAJE := 'No señor, ese # de DUI no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END UDP_CLIENTE;
+
+

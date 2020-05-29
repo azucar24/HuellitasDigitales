@@ -120,8 +120,47 @@ CREATE TABLE clientes(
    cliente_estado   VARCHAR(3),
    cliente_dui      VARCHAR(9) not null constraint clientes_pk primary key
 );
-insert into clientes values('password', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'M',75641557, 'yona', 'on', '055384768');
+--LLAMADO AL ADD CLIENTES
+DECLARE
+    param_clave clientes.cliente_clave%type := 'martinez';
+   param_correo clientes.cliente_correo%type := 'salva@gmail.com';
+    param_nombre clientes.cliente_nombre%type := 'salvador martinez';
+   param_sexo clientes.cliente_sexo%type := 'm';
+    param_telefono clientes.cliente_telefono%type := '74968945';
+   param_user clientes.cliente_user%type := 'azucar24'; 
+   param_estado clientes.cliente_estado%type := 'on';
+   param_dui clientes.cliente_dui%type := '052081117';
+   param_null varchar(200) := null;
+BEGIN
+    CREAR_CLIENTE( param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user,  param_estado,  param_dui, param_null);
+END;
+
+--LLAMADO AL DELETE CLIENTES
+DECLARE
+    cliente_dui clientes.cliente_dui%type := '052081117';
+    param_null varchar(200) := null;
+BEGIN
+    DELETE_CLIENTE(cliente_dui, param_null);
+END;
 select * from clientes;
+
+
+--LLAMADO AL UPDATE
+DECLARE
+     param_clave clientes.cliente_clave%type := 'martinez2412';
+   param_correo clientes.cliente_correo%type := 'salva@gmail.com';
+    param_nombre clientes.cliente_nombre%type := 'salvador martinez';
+   param_sexo clientes.cliente_sexo%type := 'm';
+    param_telefono clientes.cliente_telefono%type := '74968945';
+   param_user clientes.cliente_user%type := 'azucar24'; 
+   param_estado clientes.cliente_estado%type := 'on';
+   param_dui clientes.cliente_dui%type := '052081117';
+    param_null varchar(200) := null;
+BEGIN
+    UDP_CLIENTE(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user,  param_estado,  param_dui, param_null);
+END;
+
+
 
 /*============TABLA RECURSOS FISICOS==================================================*/
 CREATE TABLE recursos_fisicos(
