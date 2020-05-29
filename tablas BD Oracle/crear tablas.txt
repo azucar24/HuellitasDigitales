@@ -109,7 +109,20 @@ END;
 
 select * from cartelera;
 delete from cartelera;
+
+
 /*============TABLA CLIENTES==================================================*/
+
+CREATE TABLE roles_clientes(
+   rol_code VARCHAR(5) not null constraint rol_clientes_pk primary key,
+   rol_name VARCHAR(75) 
+);
+insert into roles_clientes VALUES('IEDU', 'Institucion Educativa');
+insert into roles_clientes VALUES('CP', 'Cuenta personal');
+
+alter table clientes add constraint clientes_rol_fk foreign key (cliente_rol_id) references roles_clientes(rol_code);
+
+
 CREATE TABLE clientes(
    cliente_clave    VARCHAR(15),
    cliente_correo   VARCHAR(50),
@@ -117,6 +130,7 @@ CREATE TABLE clientes(
    cliente_sexo     CHAR(1),
    cliente_telefono NUMBER(8),
    cliente_user     VARCHAR(15),
+   cliente_rol_id   VARCHAR(5),
    cliente_estado   VARCHAR(3),
    cliente_dui      VARCHAR(9) not null constraint clientes_pk primary key
 );
@@ -127,12 +141,13 @@ DECLARE
     param_nombre clientes.cliente_nombre%type := 'salvador martinez';
    param_sexo clientes.cliente_sexo%type := 'm';
     param_telefono clientes.cliente_telefono%type := '74968945';
-   param_user clientes.cliente_user%type := 'azucar24'; 
+   param_user clientes.cliente_user%type := 'azucar24';
+   param_rol clientes.cliente_rol_id%type := 'CP';
    param_estado clientes.cliente_estado%type := 'on';
    param_dui clientes.cliente_dui%type := '052081117';
    param_null varchar(200) := null;
 BEGIN
-    CREAR_CLIENTE( param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user,  param_estado,  param_dui, param_null);
+    CREAR_CLIENTE( param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,  param_dui, param_null);
 END;
 
 --LLAMADO AL DELETE CLIENTES
@@ -152,12 +167,13 @@ DECLARE
     param_nombre clientes.cliente_nombre%type := 'salvador martinez';
    param_sexo clientes.cliente_sexo%type := 'm';
     param_telefono clientes.cliente_telefono%type := '74968945';
-   param_user clientes.cliente_user%type := 'azucar24'; 
+   param_user clientes.cliente_user%type := 'azucar24';
+      param_rol clientes.cliente_rol_id%type := 'IEDU';
    param_estado clientes.cliente_estado%type := 'on';
    param_dui clientes.cliente_dui%type := '052081117';
     param_null varchar(200) := null;
 BEGIN
-    UDP_CLIENTE(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user,  param_estado,  param_dui, param_null);
+    UDP_CLIENTE(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,   param_dui, param_null);
 END;
 
 
