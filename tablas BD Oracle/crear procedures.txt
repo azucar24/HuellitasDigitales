@@ -13,7 +13,6 @@ BEGIN
     MENSAJE := 'Agregado exitosamente';
     DBMS_OUTPUT.PUT_LINE(MENSAJE);
     COMMIT;
-
 EXCEPTION
     WHEN OTHERS THEN
         MENSAJE := 'No puedes registrar una prsentacion con datos duplicados';	
@@ -115,19 +114,18 @@ BEGIN
     MENSAJE := 'Agregado exitosamente';
     DBMS_OUTPUT.PUT_LINE(MENSAJE);
     COMMIT;
-
 EXCEPTION
     WHEN OTHERS THEN
         MENSAJE := 'No señor, el nombre de la sala ya esta registrado';	
         DBMS_OUTPUT.PUT_LINE(MENSAJE);
     ROLLBACK;
 END CREAR_SALAS;
+
 --PROCEDURE DELETE
 create or replace PROCEDURE "DELETE_SALA"(
    C_nombre presentaciones.presentaciones_id%type,
    MENSAJE OUT varchar)
 IS
-
 BEGIN
    --Sentenses
    DELETE FROM salas WHERE sala_nombre=C_nombre;
@@ -140,6 +138,7 @@ BEGIN
     END IF;
     COMMIT;
 END DELETE_SALA;
+
 --PROCEDURE UPDATE
 create or replace PROCEDURE "UDP_SALA"(
     C_id_name salas.sala_nombre%type,
@@ -176,7 +175,6 @@ create or replace PROCEDURE "CREAR_CARTELERA"(
 AS
     cartelera_id cartelera.cartelera_id%type;
     sala_capacidad_restante cartelera.sala_capacidad_restante%type;
-    
     --Variables para validacion
     validation_presentacion presentaciones%ROWTYPE;
     validation_sala salas%ROWTYPE;
@@ -192,7 +190,6 @@ BEGIN
     MENSAJE := 'Cartelera agregada exitosamente';
     DBMS_OUTPUT.PUT_LINE(MENSAJE);
     COMMIT;
-
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         MENSAJE := 'No señor, el nombre de la sala o presentacion no existen';	
@@ -202,12 +199,12 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE(MENSAJE);
     ROLLBACK;
 END CREAR_CARTELERA;
+
 --PROCEDURE DELETE
 create or replace PROCEDURE "DELETE_CARTELERA"(
    C_id cartelera.cartelera_id%type,
    MENSAJE OUT varchar)
 IS
-
 BEGIN
    --Sentenses
    DELETE FROM cartelera WHERE cartelera_id=C_id;
@@ -220,6 +217,7 @@ BEGIN
     END IF;
     COMMIT;
 END DELETE_CARTELERA;
+
 --PROCEDURE UPDATE
 create or replace PROCEDURE "UDP_CARTELERA"(
     C_id cartelera.cartelera_id%type,
@@ -263,7 +261,6 @@ EXCEPTION
     ROLLBACK;
 END UDP_CARTELERA;
 
-
 /*PROCEDURE CREAR CLIENTES*/
 create or replace PROCEDURE "CREAR_CLIENTE"(
     cliente_clave clientes.cliente_clave%type,
@@ -275,7 +272,6 @@ create or replace PROCEDURE "CREAR_CLIENTE"(
     cliente_rol_id clientes.cliente_rol_id%type,
     cliente_estado clientes.cliente_estado%type,
     cliente_dui clientes.cliente_dui%type,
-    
     MENSAJE OUT varchar)
 AS
 BEGIN
@@ -285,7 +281,6 @@ BEGIN
     MENSAJE := 'Agregado exitosamente';
     DBMS_OUTPUT.PUT_LINE(MENSAJE);
     COMMIT;
-
 EXCEPTION
     WHEN OTHERS THEN
         MENSAJE := 'El # de DUi ya existe ';	
@@ -293,15 +288,11 @@ EXCEPTION
         ROLLBACK;
 END CREAR_CLIENTE;
 
-
-
-
 --PROCEDURE DELETE CLIENTES
 create or replace PROCEDURE "DELETE_CLIENTE"(
    cliente_dui clientes.cliente_dui%type,
    MENSAJE OUT varchar)
 IS
-
 BEGIN
    --Sentenses
    DELETE FROM clientes WHERE cliente_dui=cliente_dui;
@@ -315,12 +306,8 @@ BEGIN
     COMMIT;
 END DELETE_CLIENTE;
 
-
-
 --PROCEDURE UPDATE clientes
-
 create or replace PROCEDURE "UDP_CLIENTE"(
-
     c_clave clientes.cliente_clave%type,
     c_correo clientes.cliente_correo%type,
     c_nombre clientes.cliente_nombre%type,
