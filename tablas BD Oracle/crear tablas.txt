@@ -57,10 +57,10 @@ select * from salas;
 /*============TABLA CARTELERA==================================================*/
 --LLAMADO AL ADD
 DECLARE
-    param_id_presentacion cartelera.nombre_presentacion_id%type := 'Leones3D';
+    param_id_presentacion cartelera.nombre_presentacion_id%type := 'Dinosaurios3D';
     param_hora cartelera.hora_exhibicion%type := '9:00 AM';
     param_fecha cartelera.fecha_exhibicion%type := '31-MAY-20';
-    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 4';
+    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 3';
     param_null varchar(200) := null;
 BEGIN
     CREAR_CARTELERA(param_id_presentacion, param_hora, param_fecha, param_sala_name, param_null);
@@ -74,11 +74,11 @@ BEGIN
 END;
 --LLAMADO AL UPDATE
 DECLARE
-    param_id cartelera.cartelera_id%type := 'Sala 2Leones3D31-MAY-209:00 AM';
+    param_id cartelera.cartelera_id%type := 'Sala 1Leones3D31-MAY-209:00 AM';
     param_id_presentacion cartelera.nombre_presentacion_id%type := 'Leones3D';
     param_hora cartelera.hora_exhibicion%type := '9:00 AM';
     param_fecha cartelera.fecha_exhibicion%type := '31-MAY-20';
-    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 2';
+    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 1';
     param_sala_capacidad_restante cartelera.sala_capacidad_restante%type := 25;
     param_cartelera_estado cartelera.cartelera_estado%type := 'on';
     param_null varchar(200) := null;
@@ -143,7 +143,7 @@ select roles_clientes.rol_name, clientes.cliente_nombre FROM clientes inner join
 --LLAMADO AL ADD
 DECLARE
     param_cant_personas reservaciones.reservacion_cant_personas%type := 5;
-    param_dui_cliente reservaciones.reservacion_dui_cliente%type := '055384768';
+    param_dui_cliente reservaciones.reservacion_dui_cliente%type := '052081118';
     param_cartelera_id reservaciones.reservacion_cartelera_id%type := 'Sala 4Leones3D31-MAY-209:00 AM';
     param_null varchar(200) := null;
 BEGIN
@@ -151,8 +151,8 @@ BEGIN
 END;
 --LLAMADO AL DELETE
 DECLARE
-    param_reservacion_id reservaciones.reservacion_id%type := '055384768Sala 1Leones3D31-MAY-209:00 AM';
-    param_cant_personas reservaciones.reservacion_cant_personas%type := 6;
+    param_reservacion_id reservaciones.reservacion_id%type := '052081118Sala 1Leones3D31-MAY-209:00 AM';
+    param_cant_personas reservaciones.reservacion_cant_personas%type := 5;
     param_cartelera_id reservaciones.reservacion_cartelera_id%type := 'Sala 1Leones3D31-MAY-209:00 AM';
     param_null varchar(200) := null;
 BEGIN
@@ -179,7 +179,7 @@ inner join presentaciones on cartelera.nombre_presentacion_id=presentaciones.pre
 
 delete from reservaciones;
 
-/*============TABLA RECURSOS USUARIOS==================================================*/
+/*============TABLA USUARIOS==================================================*/
 --LLAMADO AL ADD
 DECLARE
     param_clave usuarios.usuario_clave%type := 'martinez2412';
@@ -188,7 +188,7 @@ DECLARE
     param_sexo usuarios.usuario_sexo%type := 'M';
     param_telefono usuarios.usuario_telefono%type := 74968945;
     param_user usuarios.usuario_user%type := 'azucar24';
-    param_dui usuarios.usuario_dui%type := '052081117';
+    param_dui usuarios.usuario_dui%type := '052081118';
     param_null varchar(200) := null;
 BEGIN
     CREAR_USUARIO(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_dui, param_null);

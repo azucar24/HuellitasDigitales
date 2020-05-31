@@ -135,7 +135,7 @@ END;
 --TRIGGER UPDATE
 CREATE OR REPLACE TRIGGER update_cartelera_bitacora AFTER UPDATE ON cartelera FOR EACH ROW
 DECLARE
-    responsable bitacora.responsable%type := '055384768';
+    responsable bitacora.responsable%type := '052081118';
     fecha_creacion DATE := sysdate;
     cant_registros_for_id NUMBER(11);
     id_bitacora bitacora.bitacora_id%type;
