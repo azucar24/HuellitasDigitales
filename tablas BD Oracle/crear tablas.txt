@@ -99,21 +99,21 @@ select * from roles_clientes;
 --LLAMADO AL ADD CLIENTES
 DECLARE
     param_clave clientes.cliente_clave%type := 'martinez';
-   param_correo clientes.cliente_correo%type := 'salva@gmail.com';
+    param_correo clientes.cliente_correo%type := 'salva@gmail.com';
     param_nombre clientes.cliente_nombre%type := 'salvador martinez';
-   param_sexo clientes.cliente_sexo%type := 'm';
+    param_sexo clientes.cliente_sexo%type := 'm';
     param_telefono clientes.cliente_telefono%type := '74968945';
-   param_user clientes.cliente_user%type := 'azucar24';
-   param_rol clientes.cliente_rol_id%type := 'CP';
-   param_estado clientes.cliente_estado%type := 'on';
-   param_dui clientes.cliente_dui%type := '052081117';
-   param_null varchar(200) := null;
+    param_user clientes.cliente_user%type := 'azucar24';
+    param_rol clientes.cliente_rol_id%type := 'CP';
+    param_estado clientes.cliente_estado%type := 'on';
+    param_dui clientes.cliente_dui%type := '052081118';
+    param_null varchar(200) := null;
 BEGIN
-    CREAR_CLIENTE( param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,  param_dui, param_null);
+    CREAR_CLIENTE(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,  param_dui, param_null);
 END;
 --LLAMADO AL DELETE CLIENTES
 DECLARE
-    cliente_dui clientes.cliente_dui%type := '052081117';
+    cliente_dui clientes.cliente_dui%type := '052081118';
     param_null varchar(200) := null;
 BEGIN
     DELETE_CLIENTE(cliente_dui, param_null);
@@ -125,11 +125,11 @@ DECLARE
    param_correo clientes.cliente_correo%type := 'salva@gmail.com';
     param_nombre clientes.cliente_nombre%type := 'salvador martinez';
    param_sexo clientes.cliente_sexo%type := 'm';
-    param_telefono clientes.cliente_telefono%type := '74968945';
+    param_telefono clientes.cliente_telefono%type := 74968945;
    param_user clientes.cliente_user%type := 'azucar24';
       param_rol clientes.cliente_rol_id%type := 'IEDU';
    param_estado clientes.cliente_estado%type := 'on';
-   param_dui clientes.cliente_dui%type := '052081117';
+   param_dui clientes.cliente_dui%type := '052081118';
     param_null varchar(200) := null;
 BEGIN
     UDP_CLIENTE(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,   param_dui, param_null);
@@ -181,6 +181,18 @@ delete from reservaciones;
 
 /*============TABLA RECURSOS USUARIOS==================================================*/
 --LLAMADO AL ADD
+DECLARE
+    param_clave usuarios.usuario_clave%type := 'martinez2412';
+    param_correo usuarios.usuario_correo%type := 'salva@gmail.com';
+    param_nombre usuarios.usuario_nombre%type := 'salvador martinez';
+    param_sexo usuarios.usuario_sexo%type := 'M';
+    param_telefono usuarios.usuario_telefono%type := 74968945;
+    param_user usuarios.usuario_user%type := 'azucar24';
+    param_dui usuarios.usuario_dui%type := '052081117';
+    param_null varchar(200) := null;
+BEGIN
+    CREAR_USUARIO(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_dui, param_null);
+END;
 DECLARE
     param_clave usuarios.usuario_clave%type := 'password';
     param_correo usuarios.usuario_correo%type := 'ede96yona@gmail.com';
