@@ -13,6 +13,7 @@ BEGIN
     MENSAJE := 'Agregado exitosamente';
     DBMS_OUTPUT.PUT_LINE(MENSAJE);
     COMMIT;
+
 EXCEPTION
     WHEN OTHERS THEN
         MENSAJE := 'No puedes registrar una prsentacion con datos duplicados';	
@@ -114,18 +115,19 @@ BEGIN
     MENSAJE := 'Agregado exitosamente';
     DBMS_OUTPUT.PUT_LINE(MENSAJE);
     COMMIT;
+
 EXCEPTION
     WHEN OTHERS THEN
         MENSAJE := 'No señor, el nombre de la sala ya esta registrado';	
         DBMS_OUTPUT.PUT_LINE(MENSAJE);
     ROLLBACK;
 END CREAR_SALAS;
-
 --PROCEDURE DELETE
 create or replace PROCEDURE "DELETE_SALA"(
    C_nombre presentaciones.presentaciones_id%type,
    MENSAJE OUT varchar)
 IS
+
 BEGIN
    --Sentenses
    DELETE FROM salas WHERE sala_nombre=C_nombre;
@@ -138,7 +140,6 @@ BEGIN
     END IF;
     COMMIT;
 END DELETE_SALA;
-
 --PROCEDURE UPDATE
 create or replace PROCEDURE "UDP_SALA"(
     C_id_name salas.sala_nombre%type,
@@ -175,6 +176,7 @@ create or replace PROCEDURE "CREAR_CARTELERA"(
 AS
     cartelera_id cartelera.cartelera_id%type;
     sala_capacidad_restante cartelera.sala_capacidad_restante%type;
+    
     --Variables para validacion
     validation_presentacion presentaciones%ROWTYPE;
     validation_sala salas%ROWTYPE;
@@ -190,6 +192,7 @@ BEGIN
     MENSAJE := 'Cartelera agregada exitosamente';
     DBMS_OUTPUT.PUT_LINE(MENSAJE);
     COMMIT;
+
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         MENSAJE := 'No señor, el nombre de la sala o presentacion no existen';	
@@ -199,12 +202,12 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE(MENSAJE);
     ROLLBACK;
 END CREAR_CARTELERA;
-
 --PROCEDURE DELETE
 create or replace PROCEDURE "DELETE_CARTELERA"(
    C_id cartelera.cartelera_id%type,
    MENSAJE OUT varchar)
 IS
+
 BEGIN
    --Sentenses
    DELETE FROM cartelera WHERE cartelera_id=C_id;
@@ -217,7 +220,6 @@ BEGIN
     END IF;
     COMMIT;
 END DELETE_CARTELERA;
-
 --PROCEDURE UPDATE
 create or replace PROCEDURE "UDP_CARTELERA"(
     C_id cartelera.cartelera_id%type,
@@ -231,13 +233,16 @@ create or replace PROCEDURE "UDP_CARTELERA"(
 AS
     cartelera_new_id cartelera.cartelera_id%type;
     validation_id cartelera%ROWTYPE;
+    validation_sala salas%ROWTYPE;
 BEGIN
     --Validamos el id
     cartelera_new_id := C_sala_name || C_id_presentacion || C_fecha || C_hora;
     --Validamos campos
     SELECT * INTO validation_id FROM cartelera WHERE cartelera_id=C_id;
+    SELECT * INTO validation_sala FROM salas WHERE sala_nombre=C_sala_name;
     --Sentenses
-    if cartelera_new_id = C_id AND validation_id.hora_exhibicion = C_hora AND validation_id.fecha_exhibicion = C_fecha then
+    if cartelera_new_id = C_id AND validation_id.hora_exhibicion = C_hora AND validation_id.fecha_exhibicion = C_fecha 
+    AND validation_id.sala_exhibicion_id=C_sala_name AND validation_id.sala_capacidad_restante=C_sala_capacidad_restante AND validation_id.cartelera_estado=C_cartelera_estado then
         MENSAJE := 'No señor, no esta enviando informacion nueva';
         DBMS_OUTPUT.PUT_LINE(MENSAJE);
     else
@@ -256,11 +261,15 @@ BEGIN
     COMMIT;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
-        MENSAJE := 'No señor, este id de cartelera no existe';
+        MENSAJE := 'No señor, este id de cartelera o sala no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    WHEN OTHERS THEN
+        MENSAJE := 'No señor, esta cartelera ya existe';	
         DBMS_OUTPUT.PUT_LINE(MENSAJE);
     ROLLBACK;
 END UDP_CARTELERA;
 
+/*PROCEDIMIENTOS ALMACENADOS, TABLA CLIENTES*/
 /*PROCEDURE CREAR CLIENTES*/
 create or replace PROCEDURE "CREAR_CLIENTE"(
     cliente_clave clientes.cliente_clave%type,
@@ -340,5 +349,291 @@ EXCEPTION
     ROLLBACK;
 END UDP_CLIENTE;
 
+/*PROCEDIMIENTOS ALMACENADOS, TABLA RESERVACIONES*/
+--PROCEDURE ADD
+create or replace PROCEDURE "CREAR_RESERVACIONES"(
+    C_cant_personas reservaciones.reservacion_cant_personas%type,
+    C_dui_cliente reservaciones.reservacion_dui_cliente%type,
+    C_cartelera_id reservaciones.reservacion_cartelera_id%type,
+    MENSAJE OUT varchar)
+AS
+    reservacion_new_id reservaciones.reservacion_id%type;
+    sala_capacidad_restante cartelera.sala_capacidad_restante%type;
+    sala_nueva_capacidad cartelera.sala_capacidad_restante%type;
+    --Variables para validacion
+    validation_cartelera cartelera%ROWTYPE;
+    validation_cliente clientes%ROWTYPE;
+    --Variable para validar si este cliente ya tiene registros
+    validation_cliente_registros reservaciones%ROWTYPE;
+    --VARIABLE PARA REACOMODACION
+    reacomodacion_cartelera cartelera%ROWTYPE;
+BEGIN
+    --validamos requisitos
+    SELECT * INTO validation_cartelera FROM cartelera WHERE cartelera_id=C_cartelera_id;
+    SELECT * INTO validation_cliente FROM clientes WHERE cliente_dui=C_dui_cliente;
+    --Sentences
+    --VALIDAR EL TIPO DE CLIENTE
+    IF validation_cliente.cliente_rol_id = 'IEDU' THEN
+        --VALIDAMOS LOS CUPOS RESTANTES
+        IF C_cant_personas > validation_cartelera.sala_capacidad_restante THEN
+            --RECORREMOS TODA LA CARTELERA EN BUSCA D EUNA SALA CON CUPO SUFICIENTE
+            SELECT * INTO reacomodacion_cartelera FROM cartelera WHERE nombre_presentacion_id=validation_cartelera.nombre_presentacion_id 
+            AND hora_exhibicion=validation_cartelera.hora_exhibicion AND fecha_exhibicion=validation_cartelera.fecha_exhibicion 
+            AND cartelera_estado=validation_cartelera.cartelera_estado AND sala_capacidad_restante>C_cant_personas;
+            
+            --Generar el id
+            reservacion_new_id := C_dui_cliente || reacomodacion_cartelera.cartelera_id;
+            --Generamos la nueva capacidad de la sala descontanto los cupos de la reservacion
+            sala_nueva_capacidad := reacomodacion_cartelera.sala_capacidad_restante - C_cant_personas;
+            --Actualizamos la capacidad restante de la sala
+            UPDATE cartelera SET sala_capacidad_restante=sala_nueva_capacidad WHERE cartelera_id=reacomodacion_cartelera.cartelera_id;
+            --Insertamos la reservacion
+            INSERT INTO reservaciones VALUES(reservacion_new_id, C_cant_personas, 'p', C_dui_cliente, reacomodacion_cartelera.cartelera_id);
+            MENSAJE := '1-Reservacion agregada exitosamente, tu sala registrada es: ' || reacomodacion_cartelera.sala_exhibicion_id;
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ELSE
+            --Generar el id
+            reservacion_new_id := C_dui_cliente || validation_cartelera.cartelera_id;
+            --Generamos la nueva capacidad de la sala descontanto los cupos de la reservacion
+            sala_nueva_capacidad := validation_cartelera.sala_capacidad_restante - C_cant_personas;
+             --Actualizamos la capacidad restante de la sala
+            UPDATE cartelera SET sala_capacidad_restante=sala_nueva_capacidad WHERE cartelera_id=validation_cartelera.cartelera_id;
+            --INSERTAMOS LA RESERVACION
+            INSERT INTO reservaciones VALUES(reservacion_new_id, C_cant_personas, 'p', C_dui_cliente, validation_cartelera.cartelera_id);
+            MENSAJE := '2-Reservacion agregada exitosamente tu sala registrada es: ' || validation_cartelera.sala_exhibicion_id;
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    ELSE
+        IF C_cant_personas > validation_cartelera.sala_capacidad_restante THEN
+            --RECORREMOS TODA LA CARTELERA EN BUSCA D EUNA SALA CON CUPO SUFICIENTE
+            SELECT * INTO reacomodacion_cartelera FROM cartelera WHERE nombre_presentacion_id=validation_cartelera.nombre_presentacion_id 
+            AND hora_exhibicion=validation_cartelera.hora_exhibicion AND fecha_exhibicion=validation_cartelera.fecha_exhibicion 
+            AND cartelera_estado=validation_cartelera.cartelera_estado AND sala_capacidad_restante>C_cant_personas;
+            
+            --Generar el id
+            reservacion_new_id := C_dui_cliente || reacomodacion_cartelera.cartelera_id;
+            --Generamos la nueva capacidad de la sala descontanto los cupos de la reservacion
+            sala_nueva_capacidad := reacomodacion_cartelera.sala_capacidad_restante - C_cant_personas;
+            --Actualizamos la capacidad restante de la sala
+            UPDATE cartelera SET sala_capacidad_restante=sala_nueva_capacidad WHERE cartelera_id=reacomodacion_cartelera.cartelera_id;
+            --Insertamos la reservacion
+            INSERT INTO reservaciones VALUES(reservacion_new_id, C_cant_personas, 'p', C_dui_cliente, reacomodacion_cartelera.cartelera_id);
+            MENSAJE := '1-Reservacion agregada exitosamente, tu sala registrada es: ' || reacomodacion_cartelera.sala_exhibicion_id;
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ELSE
+            --Generar el id
+            reservacion_new_id := C_dui_cliente || validation_cartelera.cartelera_id;
+            --Generamos la nueva capacidad de la sala descontanto los cupos de la reservacion
+            sala_nueva_capacidad := validation_cartelera.sala_capacidad_restante - C_cant_personas;
+             --Actualizamos la capacidad restante de la sala
+            UPDATE cartelera SET sala_capacidad_restante=sala_nueva_capacidad WHERE cartelera_id=validation_cartelera.cartelera_id;
+            --INSERTAMOS LA RESERVACION
+            INSERT INTO reservaciones VALUES(reservacion_new_id, C_cant_personas, 'p', C_dui_cliente, validation_cartelera.cartelera_id);
+            MENSAJE := '2-Reservacion agregada exitosamente tu sala registrada es: ' || validation_cartelera.sala_exhibicion_id;
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    END IF;
+    COMMIT;
 
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        MENSAJE := 'Lamentablemente, no contamos con espacio suficiente para la hora seleccionada';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    WHEN OTHERS THEN
+        MENSAJE := 'No señor, esta reservacion para esta cartelera y cliente, ya estan registrados';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END CREAR_RESERVACIONES;
 
+--PROCEDURE DELETE
+create or replace PROCEDURE "DELETE_RESERVACION"(
+   C_id reservaciones.reservacion_id%type,
+   param_cantidad_personas reservaciones.reservacion_cant_personas%type,
+   param_cartelera_id reservaciones.reservacion_cartelera_id%type,
+   MENSAJE OUT varchar)
+IS
+    validation_cartelera cartelera%ROWTYPE;
+    
+    --Variables
+    new_capacidad_restante NUMBER(11);
+BEGIN
+   --Sentenses
+   SELECT * INTO validation_cartelera FROM cartelera WHERE cartelera_id=param_cartelera_id;
+   --GENERAMOS LA NUEVA CAPACIDAD, LA CAPACIDAD ACTUAL MAS LOS QUE ESTOY BORRANDO
+   new_capacidad_restante := validation_cartelera.sala_capacidad_restante + param_cantidad_personas;
+   --ACTUALIZAMOS EL CUPO EN LA CARTELERA SUMANDOLE LOS QUE ESTAMOS BORANDO
+   UPDATE cartelera SET sala_capacidad_restante=new_capacidad_restante WHERE cartelera_id=validation_cartelera.cartelera_id;
+   IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'Error en el proceso de cartelera';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        DELETE FROM reservaciones WHERE reservacion_id=C_id;
+        IF SQL%ROWCOUNT = 0 THEN
+            MENSAJE := 'Error en el proceso de reservacion';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+          ELSE
+            MENSAJE := 'Borrado de reservacion exitoso';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    END IF;
+   COMMIT;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        MENSAJE := 'No señor, este id de reservacion o cartelera no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+END DELETE_RESERVACION;
+
+--PROCEDURE UPDATE
+create or replace PROCEDURE "UDP_RESERVACION"(
+    C_id reservaciones.reservacion_id%type,
+    C_cant_personas reservaciones.reservacion_cant_personas%type,
+    C_estado reservaciones.reservacion_estado%type,
+    C_sala_name cartelera.sala_exhibicion_id%type,
+    C_cartelera_id reservaciones.reservacion_cartelera_id%type,
+    MENSAJE OUT varchar)
+AS
+    --Variables para requisitos
+    validation_reservacion reservaciones%ROWTYPE; 
+    validation_cartelera cartelera%ROWTYPE;
+    --Variables
+    new_cantidad_restante cartelera.sala_capacidad_restante%type;
+    diferencia_cantidad NUMBER(11);
+BEGIN
+    SELECT * INTO validation_reservacion FROM reservaciones WHERE reservacion_id=C_id;
+    --Compruebo id reservacion que no cambie
+    if C_cant_personas > validation_reservacion.reservacion_cant_personas then
+        --VERIFICAMOS SI AUN QUEDA CUPO SUFICIENTE EN LA CARTELERA
+        SELECT * INTO validation_cartelera FROM cartelera WHERE  cartelera_id = C_cartelera_id;
+        if C_cant_personas > validation_cartelera.sala_capacidad_restante then
+            MENSAJE := 'Lo sentimos, ya no queda cupo suficiente para esta cantidad de personas, cupo libre: ' || validation_cartelera.sala_capacidad_restante;
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        else
+            --CALCULAMOS LA DIFERENCIA
+            diferencia_cantidad := C_cant_personas - validation_reservacion.reservacion_cant_personas;
+            --GENERAMOS LA OPERACION PARA LA NUEVA CANTIDAD
+            new_cantidad_restante := validation_cartelera.sala_capacidad_restante - diferencia_cantidad;
+            UPDATE cartelera SET sala_capacidad_restante=new_cantidad_restante WHERE cartelera_id=validation_cartelera.cartelera_id;
+            IF SQL%ROWCOUNT = 0 THEN
+                MENSAJE := 'No se pudo actualizar la cantidad';
+                DBMS_OUTPUT.PUT_LINE(MENSAJE);
+              ELSE
+                --MODIFICAMOS LA CANTIDAD
+                UPDATE reservaciones SET  reservacion_cant_personas=C_cant_personas WHERE reservacion_id = validation_reservacion.reservacion_id;
+                IF SQL%ROWCOUNT = 0 THEN
+                    MENSAJE := 'No se pudo actualizar la cantidad';
+                    DBMS_OUTPUT.PUT_LINE(MENSAJE);
+                  ELSE
+                    MENSAJE := 'Actualizacion de cantidad exitosa';
+                    DBMS_OUTPUT.PUT_LINE(MENSAJE);
+                END IF;
+            END IF;
+        end if;
+    elsif C_cant_personas < validation_reservacion.reservacion_cant_personas then
+        --SACAMOS LA DIFERENCIA DE LOS CUPOS QUE ESTA DESCARTANDO
+        diferencia_cantidad := validation_reservacion.reservacion_cant_personas - C_cant_personas;
+        --Validamos la cartelera
+        SELECT * INTO validation_cartelera FROM cartelera WHERE  cartelera_id = C_cartelera_id;
+        new_cantidad_restante := validation_cartelera.sala_capacidad_restante + diferencia_cantidad;
+        --ACTUALIZAMOS LA CARTELERA CON LOS NUEVOS CUPOS LIBRES
+        UPDATE cartelera SET sala_capacidad_restante=new_cantidad_restante WHERE cartelera_id=validation_cartelera.cartelera_id;
+        IF SQL%ROWCOUNT = 0 THEN
+            MENSAJE := 'No se pudo actualizar la cantidad';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ELSE
+            --ACTUALIZAMOS LA CANTIDAD EN LA RESERVACION
+            UPDATE reservaciones SET  reservacion_cant_personas=C_cant_personas  WHERE reservacion_id = validation_reservacion.reservacion_id;
+            MENSAJE := 'Actualizacion de cantidad exitosa';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+    elsif C_cant_personas = validation_reservacion.reservacion_cant_personas then
+        MENSAJE := 'Estas enviando la misma cantidad que ya esta registrada';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    end if;
+    COMMIT;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        MENSAJE := 'No señor, este id de reservacion o cartelera no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END UDP_RESERVACION;
+
+/*PROCEDIMIENTOS ALMACENADOS, TABLA USUARIOS*/
+--ADD USUARIOS
+create or replace PROCEDURE "CREAR_USUARIO"(
+    U_clave usuarios.usuario_clave%type,
+    U_correo usuarios.usuario_correo%type,
+    U_nombre usuarios.usuario_nombre%type,
+    U_sexo usuarios.usuario_sexo%type,
+    U_telefono usuarios.usuario_telefono%type,
+    U_user usuarios.usuario_user%type,
+    U_dui usuarios.usuario_dui%type,
+    MENSAJE OUT varchar)
+AS
+BEGIN
+    --Sentenses
+    INSERT INTO usuarios VALUES(U_clave, U_correo, U_nombre, U_sexo, U_telefono,  U_user, 'on' , U_dui);
+    MENSAJE := 'Agregado exitosamente';
+    DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        MENSAJE := 'El # de DUi ya existe ';	
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END CREAR_USUARIO;
+
+--PROCEDURE DELETE
+create or replace PROCEDURE "DELETE_USUARIOS"(
+   u_dui usuarios.usuario_dui%type,
+   MENSAJE OUT varchar)
+IS
+BEGIN
+   --Sentenses
+   DELETE FROM usuarios WHERE usuario_dui=u_dui;
+    IF SQL%ROWCOUNT = 0 THEN
+        MENSAJE := 'Error en el proceso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+      ELSE
+        MENSAJE := 'Borrado exitoso';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    END IF;
+    COMMIT;
+END DELETE_USUARIOS;
+
+--UDP USUARIOS
+create or replace PROCEDURE "UDP_USUARIOS"(
+   U_clave usuarios.usuario_clave%type,
+   U_correo usuarios.usuario_correo%type,
+   U_nombre usuarios.usuario_nombre%type,
+   U_sexo usuarios.usuario_sexo%type,
+   U_telefono usuarios.usuario_telefono%type,
+   U_user usuarios.usuario_user%type,
+   U_estado usuarios.usuario_estado%type,
+   U_dui usuarios.usuario_dui%type,
+   MENSAJE OUT varchar)
+AS
+    --VALIDANDO REQUISITOS
+    validation_usuario usuarios%ROWTYPE;
+BEGIN
+   --Sentenses
+   if LENGTH(U_dui) = 9 then
+        SELECT * INTO validation_usuario FROM usuarios WHERE usuario_dui=U_dui;
+        --Validando parametros
+        UPDATE usuarios SET usuario_clave=NVL(U_clave, usuario_clave), usuario_correo=NVL(U_correo, usuario_correo), usuario_nombre=NVL(U_nombre, usuario_nombre),
+        usuario_sexo=NVL(U_sexo, usuario_sexo), usuario_telefono=NVL(U_telefono, usuario_telefono), usuario_user=NVL(U_user, usuario_user), 
+        usuario_estado=NVL(U_estado, usuario_estado) WHERE usuario_dui = validation_usuario.usuario_dui;
+        IF SQL%ROWCOUNT = 0 THEN
+            MENSAJE := 'Error en el proceso de update';
+            DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        ELSE
+            MENSAJE := 'Actualizacion del usuario exitoso';
+             DBMS_OUTPUT.PUT_LINE(MENSAJE);
+        END IF;
+        COMMIT;
+   end if;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        MENSAJE := 'No señor, ese dui de usuario no existe';
+        DBMS_OUTPUT.PUT_LINE(MENSAJE);
+    ROLLBACK;
+END UDP_USUARIOS;

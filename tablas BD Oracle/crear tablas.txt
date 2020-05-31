@@ -1,13 +1,7 @@
 /*============TABLA PRESENTACIONES============================================*/
-CREATE TABLE presentaciones(
-   presentaciones_id            VARCHAR(20) not null constraint presentacion_pk primary key,
-   presentacion_nombre          VARCHAR(25),
-   presentacion_tipo_proyeccion VARCHAR(25),
-   presentacion_estado          VARCHAR(3)
-);
 --LLAMADO AL ADD
 DECLARE
-    param_nombre presentaciones.presentacion_nombre%type := 'Leones';
+    param_nombre presentaciones.presentacion_nombre%type := 'Dinosaurios';
     param_tipo presentaciones.presentacion_tipo_proyeccion%type := '3D';
     param_null varchar(200) := null;
 BEGIN
@@ -33,14 +27,10 @@ END;
 select * from presentaciones;
 
 /*============TABLA SALAS==================================================*/
-CREATE TABLE salas(
-   sala_capacidad NUMBER(11),
-   sala_nombre    VARCHAR(50) not null constraint salas_pk primary key
-);
 --LLAMADO AL ADD
 DECLARE
-    param_capacidad salas.sala_capacidad%type := 30;
-    param_nombre salas.sala_nombre%type := 'Sala 2';
+    param_capacidad salas.sala_capacidad%type := 4;
+    param_nombre salas.sala_nombre%type := 'Sala 4';
     param_null varchar(200) := null;
 BEGIN
     CREAR_SALAS(param_capacidad, param_nombre, param_null);
@@ -65,23 +55,12 @@ END;
 select * from salas;
 
 /*============TABLA CARTELERA==================================================*/
-CREATE TABLE cartelera(
-   cartelera_id            VARCHAR(75) not null constraint cartelera_pk  primary key,
-   nombre_presentacion_id  VARCHAR(20),
-   hora_exhibicion         VARCHAR(15),
-   fecha_exhibicion        VARCHAR(15),
-   sala_exhibicion_id      VARCHAR(50),
-   sala_capacidad_restante NUMBER(11),
-   cartelera_estado        VARCHAR(3)
-);
-alter table cartelera add constraint cart_exhibi_fk foreign key (nombre_presentacion_id) references presentaciones (presentaciones_id);
-alter table cartelera add constraint cart_sala_fk foreign key (sala_exhibicion_id) references salas (sala_nombre);
 --LLAMADO AL ADD
 DECLARE
     param_id_presentacion cartelera.nombre_presentacion_id%type := 'Leones3D';
     param_hora cartelera.hora_exhibicion%type := '9:00 AM';
-    param_fecha cartelera.fecha_exhibicion%type := '26-MAY-20';
-    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 1';
+    param_fecha cartelera.fecha_exhibicion%type := '31-MAY-20';
+    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 4';
     param_null varchar(200) := null;
 BEGIN
     CREAR_CARTELERA(param_id_presentacion, param_hora, param_fecha, param_sala_name, param_null);
@@ -95,12 +74,12 @@ BEGIN
 END;
 --LLAMADO AL UPDATE
 DECLARE
-    param_id cartelera.cartelera_id%type := 'Sala 1Leones3D26-MAY-209:00 AM';
+    param_id cartelera.cartelera_id%type := 'Sala 2Leones3D31-MAY-209:00 AM';
     param_id_presentacion cartelera.nombre_presentacion_id%type := 'Leones3D';
     param_hora cartelera.hora_exhibicion%type := '9:00 AM';
-    param_fecha cartelera.fecha_exhibicion%type := '27-MAY-20';
-    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 1';
-    param_sala_capacidad_restante cartelera.sala_capacidad_restante%type := 30;
+    param_fecha cartelera.fecha_exhibicion%type := '31-MAY-20';
+    param_sala_name cartelera.sala_exhibicion_id%type := 'Sala 2';
+    param_sala_capacidad_restante cartelera.sala_capacidad_restante%type := 25;
     param_cartelera_estado cartelera.cartelera_estado%type := 'on';
     param_null varchar(200) := null;
 BEGIN
@@ -108,122 +87,101 @@ BEGIN
 END;
 
 select * from cartelera;
+
 delete from cartelera;
 
+/*============TABLA ROLES CLIENTES==================================================*/
+insert into roles_clientes VALUES('IEDU', 'Institucion Educativa');
+insert into roles_clientes VALUES('CP', 'Cuenta personal');
+select * from roles_clientes;
 
 /*============TABLA CLIENTES==================================================*/
 
-CREATE TABLE roles_clientes(
-   rol_code VARCHAR(5) not null constraint rol_clientes_pk primary key,
-   rol_name VARCHAR(75) 
-);
-insert into roles_clientes VALUES('IEDU', 'Institucion Educativa');
-insert into roles_clientes VALUES('CP', 'Cuenta personal');
-
-alter table clientes add constraint clientes_rol_fk foreign key (cliente_rol_id) references roles_clientes(rol_code);
-
-
-CREATE TABLE clientes(
-   cliente_clave    VARCHAR(15),
-   cliente_correo   VARCHAR(50),
-   cliente_nombre   VARCHAR(50),
-   cliente_sexo     CHAR(1),
-   cliente_telefono NUMBER(8),
-   cliente_user     VARCHAR(15),
-   cliente_rol_id   VARCHAR(5),
-   cliente_estado   VARCHAR(3),
-   cliente_dui      VARCHAR(9) not null constraint clientes_pk primary key
-);
---LLAMADO AL ADD CLIENTES
-DECLARE
-    param_clave clientes.cliente_clave%type := 'martinez';
-   param_correo clientes.cliente_correo%type := 'salva@gmail.com';
-    param_nombre clientes.cliente_nombre%type := 'salvador martinez';
-   param_sexo clientes.cliente_sexo%type := 'm';
-    param_telefono clientes.cliente_telefono%type := '74968945';
-   param_user clientes.cliente_user%type := 'azucar24';
-   param_rol clientes.cliente_rol_id%type := 'CP';
-   param_estado clientes.cliente_estado%type := 'on';
-   param_dui clientes.cliente_dui%type := '052081117';
-   param_null varchar(200) := null;
-BEGIN
-    CREAR_CLIENTE( param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,  param_dui, param_null);
-END;
-
---LLAMADO AL DELETE CLIENTES
-DECLARE
-    cliente_dui clientes.cliente_dui%type := '052081117';
-    param_null varchar(200) := null;
-BEGIN
-    DELETE_CLIENTE(cliente_dui, param_null);
-END;
+insert into clientes values('password', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'M',75641557, 'yona', 'CP','on', '055384768');
+insert into clientes values('password', 'educativo@gmail.com', 'Centro escolar X', 'I',75641557, 'docente', 'IEDU','on', '123456709');
 select * from clientes;
-
-
---LLAMADO AL UPDATE
-DECLARE
-     param_clave clientes.cliente_clave%type := 'martinez2412';
-   param_correo clientes.cliente_correo%type := 'salva@gmail.com';
-    param_nombre clientes.cliente_nombre%type := 'salvador martinez';
-   param_sexo clientes.cliente_sexo%type := 'm';
-    param_telefono clientes.cliente_telefono%type := '74968945';
-   param_user clientes.cliente_user%type := 'azucar24';
-      param_rol clientes.cliente_rol_id%type := 'IEDU';
-   param_estado clientes.cliente_estado%type := 'on';
-   param_dui clientes.cliente_dui%type := '052081117';
-    param_null varchar(200) := null;
-BEGIN
-    UDP_CLIENTE(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,   param_dui, param_null);
-END;
-
-
-
+select roles_clientes.rol_name, clientes.cliente_nombre FROM clientes inner join roles_clientes on clientes.cliente_rol_id=roles_clientes.rol_code;
 /*============TABLA RECURSOS FISICOS==================================================*/
-CREATE TABLE recursos_fisicos(
-   recursosf_id   NUMBER(11) not null constraint recursos_fisicos_pk primary key,
-   recurso_name   VARCHAR(50),
-   sala_asignada  VARCHAR(50),
-   recurso_codigo VARCHAR(20),
-   recurso_estado VARCHAR(3)
-);
-alter table recursos_fisicos add constraint recursos_fisicos_fk foreign key (sala_asignada) references salas (sala_nombre);
+
 
 /*============TABLA RECURSOS RESERVACIONES==================================================*/
-CREATE TABLE reservaciones(
-   reservacion_id            NUMBER(11) not null constraint reservaciones_pk primary key,
-   reservacion_cant_personas NUMBER(11),
-   reservacion_estado        CHAR(1),
-   reservacion_dui_cliente   VARCHAR(9),
-   reservacion_cartelera_id  VARCHAR(25)
-);
-alter table reservaciones add constraint reservaciones_clientes_fk foreign key (reservacion_dui_cliente) references clientes (cliente_dui);
-alter table reservaciones add constraint reservaciones_carte_fk foreign key (reservacion_cartelera_id) references cartelera(cartelera_id);
+--LLAMADO AL ADD
+DECLARE
+    param_cant_personas reservaciones.reservacion_cant_personas%type := 5;
+    param_dui_cliente reservaciones.reservacion_dui_cliente%type := '055384768';
+    param_cartelera_id reservaciones.reservacion_cartelera_id%type := 'Sala 4Leones3D31-MAY-209:00 AM';
+    param_null varchar(200) := null;
+BEGIN
+    CREAR_RESERVACIONES(param_cant_personas, param_dui_cliente, param_cartelera_id, param_null);
+END;
+--LLAMADO AL DELETE
+DECLARE
+    param_reservacion_id reservaciones.reservacion_id%type := '055384768Sala 1Leones3D31-MAY-209:00 AM';
+    param_cant_personas reservaciones.reservacion_cant_personas%type := 6;
+    param_cartelera_id reservaciones.reservacion_cartelera_id%type := 'Sala 1Leones3D31-MAY-209:00 AM';
+    param_null varchar(200) := null;
+BEGIN
+    DELETE_RESERVACION(param_reservacion_id, param_cant_personas, param_cartelera_id, param_null);
+END;
+--LLAMADO AL UDP
+DECLARE
+    param_reservacion_id reservaciones.reservacion_id%type := '055384768Sala 1Leones3D31-MAY-209:00 AM';
+    param_reservacion_cant_personas reservaciones.reservacion_cant_personas%type := 5;
+    param_reservacion_estado reservaciones.reservacion_estado%type := 'p';
+    param_reservacion_dui_cliente reservaciones.reservacion_dui_cliente%type := '055384768';
+    param_reservacion_cartelera_id reservaciones.reservacion_cartelera_id%type := 'Sala 1Leones3D31-MAY-209:00 AM';
+    param_null VARCHAR(200) := null;
+BEGIN
+    UDP_RESERVACION(param_reservacion_id, param_reservacion_cant_personas, param_reservacion_estado, param_reservacion_dui_cliente, param_reservacion_cartelera_id, param_null);
+END;
+
+select * from reservaciones;
+
+select clientes.cliente_nombre, presentaciones.presentacion_nombre, cartelera.sala_exhibicion_id, cartelera.hora_exhibicion, cartelera.fecha_exhibicion, 
+reservaciones.reservacion_cant_personas FROM reservaciones inner join clientes on reservacion_dui_cliente=clientes.cliente_dui 
+inner join cartelera on reservaciones.reservacion_cartelera_id=cartelera_id
+inner join presentaciones on cartelera.nombre_presentacion_id=presentaciones.presentaciones_id;
+
+delete from reservaciones;
 
 /*============TABLA RECURSOS USUARIOS==================================================*/
-CREATE TABLE usuarios(
-   usuario_clave    VARCHAR(15),
-   usuario_correo   VARCHAR(50),
-   usuario_nombre   VARCHAR(50),
-   usuario_rol      VARCHAR(15),
-   usuario_sexo     CHAR(1),
-   usuario_telefono NUMBER(8),
-   usuario_user     VARCHAR(15),
-   usuario_estado   VARCHAR(3),
-   usuario_dui      VARCHAR(11) not null constraint usuarios_pk primary key
-);
-insert into usuarios values('password', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'Admin', 'M',75641557, 'yona', 'on', '055384768');
-select * from usuarios;
+--LLAMADO AL ADD
+DECLARE
+    param_clave usuarios.usuario_clave%type := 'password';
+    param_correo usuarios.usuario_correo%type := 'ede96yona@gmail.com';
+    param_nombre usuarios.usuario_nombre%type := 'Yonathan Ortiz';
+    param_sexo usuarios.usuario_sexo%type := 'M';
+    param_telefono usuarios.usuario_telefono%type := 75641557;
+    param_user usuarios.usuario_user%type := 'yona';
+    param_dui usuarios.usuario_dui%type := '055384768';
+    param_null varchar(200) := null;
+BEGIN
+    CREAR_USUARIO(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_dui, param_null);
+END;
+--LLAMADO AL DELETE
+DECLARE
+    param_dui_usuario usuarios.usuario_dui%type := '055384768';
+    param_null VARCHAR(200) := null;
+BEGIN
+    DELETE_USUARIOS(param_dui_usuario, param_null);
+END;
+--LLAMADO AL UDP
+DECLARE
+    param_clave usuarios.usuario_clave%type := 'password';
+    param_correo usuarios.usuario_correo%type := 'ede96yona@gmail.com';
+    param_nombre usuarios.usuario_nombre%type := 'Yonathan Ortiz';
+    param_sexo usuarios.usuario_sexo%type := 'M';
+    param_telefono usuarios.usuario_telefono%type := 75641557;
+    param_user usuarios.usuario_user%type := 'yona';
+    param_estado usuarios.usuario_estado%type := 'off';
+    param_dui usuarios.usuario_dui%type := '055384768';
+    param_null varchar(200) := null;
+BEGIN
+    UDP_USUARIOS(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_estado, param_dui, param_null);
+END;
 
+select * from usuarios;
+delete from usuarios;
 /*============TABLA RECURSOS BITACORA==================================================*/
-CREATE TABLE bitacora(
-   bitacora_id             NUMBER(11) not null constraint bitacora_pk primary key,
-   accion                  VARCHAR(25),
-   tabla_afectada          VARCHAR(25),
-   responsable             VARCHAR(50),
-   fecha_accion            DATE default sysdate,
-   registro_anterior       VARCHAR(300),
-   llave_registro_afectado VARCHAR(75)
-);
-alter table bitacora add constraint bitacora_usuarios_fk foreign key (responsable) references usuarios(usuario_dui);
 select * from bitacora;
 delete from bitacora;

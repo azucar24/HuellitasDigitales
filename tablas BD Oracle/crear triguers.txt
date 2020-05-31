@@ -151,9 +151,7 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
 END;
 
-
-
-/*CREACION DE TRIGGERS, TABLA CLientes*/
+/*CREACION DE TRIGGERS, TABLA CLIENTES*/
 --TRIGGER ADD
 CREATE OR REPLACE TRIGGER add_cliente_bitacora BEFORE INSERT ON clientes FOR EACH ROW
 DECLARE
@@ -169,8 +167,6 @@ EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
 END;
-
-
 --TRIGGER DELETE CLIENTES
 CREATE OR REPLACE TRIGGER delete_cliente_bitacora AFTER DELETE ON clientes FOR EACH ROW
 DECLARE
@@ -190,8 +186,6 @@ EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
 END;
-
-
 --TRIGGER UPDATE CLIENTE
 CREATE OR REPLACE TRIGGER update_clientes_bitacora AFTER UPDATE ON clientes FOR EACH ROW
 DECLARE
@@ -207,6 +201,109 @@ BEGIN
     SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
     id_bitacora := cant_registros_for_id + 1;
     INSERT INTO bitacora VALUES(id_bitacora, 'UPDATE', 'clientes', responsable, fecha_creacion, registros_anteriores, :NEW.cliente_dui);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+/*CREACION DE TRIGGERS, TABLA RESERVACIONES*/
+--TRIGGER ADD
+CREATE OR REPLACE TRIGGER add_reservaciones_bitacora BEFORE INSERT ON reservaciones FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'CREATED', 'Reservaciones', responsable, fecha_creacion, '', :NEW.reservacion_id);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER DELETE
+CREATE OR REPLACE TRIGGER delete_reservacion_bitacora AFTER DELETE ON reservaciones FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.reservacion_id || ' Cant Personas:' || :OLD.RESERVACION_CANT_PERSONAS || ' Estado:' 
+    || :OLD.RESERVACION_ESTADO || ' Cliente:' || :OLD.RESERVACION_DUI_CLIENTE || ' Cartelera:' || :OLD.RESERVACION_CARTELERA_ID;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'DELETE', 'Reservaciones', responsable, fecha_creacion, registros_anteriores, :OLD.reservacion_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER UPDATE
+CREATE OR REPLACE TRIGGER update_reservacion_bitacora AFTER UPDATE ON reservaciones FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.reservacion_id || ' Cant Personas:' || :OLD.RESERVACION_CANT_PERSONAS || ' Estado:' 
+    || :OLD.RESERVACION_ESTADO || ' Cliente:' || :OLD.RESERVACION_DUI_CLIENTE || ' Cartelera:' || :OLD.RESERVACION_CARTELERA_ID;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'UPDATE', 'Reservaciones', responsable, fecha_creacion, registros_anteriores, :NEW.reservacion_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+
+/*CREACION DE TRIGGERS, TABLA USUARIOS*/
+--TRIGGER ADD
+CREATE OR REPLACE TRIGGER add_usuarios_bitacora BEFORE INSERT ON usuarios FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'CREATED', 'Usuarios', responsable, fecha_creacion, '', :NEW.usuario_dui);
+EXCEPTION
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER DELETE USUARIOS
+CREATE OR REPLACE TRIGGER delete_usuario_bitacora AFTER DELETE ON usuarios FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.usuario_dui || ' Clave:' || :OLD.usuario_clave || ' Correo:' || 
+    :OLD.usuario_correo || ' Nombre:' || :OLD.usuario_nombre || ' Nombre:' || :OLD.usuario_nombre || ' Sexo:' || :OLD.usuario_sexo
+    || ' Telefono:' || :OLD.usuario_telefono || ' User:' || :OLD.usuario_user   || ' Estado:' || :OLD.usuario_estado;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'DELETE', 'usuarios', responsable, fecha_creacion, registros_anteriores, :OLD.usuario_dui);
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
+END;
+--TRIGGER UPDATE USUARIOS
+CREATE OR REPLACE TRIGGER update_usuarios_bitacora AFTER UPDATE ON usuarios FOR EACH ROW
+DECLARE
+    responsable bitacora.responsable%type := '055384768';
+    fecha_creacion DATE := sysdate;
+    cant_registros_for_id NUMBER(11);
+    id_bitacora bitacora.bitacora_id%type;
+    registros_anteriores bitacora.registro_anterior%type := 'Llave:' || :OLD.usuario_dui || ' Clave:' || :OLD.usuario_clave || ' Correo:' || 
+    :OLD.usuario_correo || ' Nombre:' || :OLD.usuario_nombre || ' Nombre:' || :OLD.usuario_nombre || ' Sexo:' || :OLD.usuario_sexo
+    || ' Telefono:' || :OLD.usuario_telefono || ' User:' || :OLD.usuario_user   || ' Estado:' || :OLD.usuario_estado;
+BEGIN
+    SELECT COUNT(*) INTO cant_registros_for_id FROM bitacora;
+    id_bitacora := cant_registros_for_id + 1;
+    INSERT INTO bitacora VALUES(id_bitacora, 'UPDATE', 'usuarios', responsable, fecha_creacion, registros_anteriores, :NEW.usuario_dui);
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Bitacora no guardada');
