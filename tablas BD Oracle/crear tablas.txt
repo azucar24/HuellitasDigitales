@@ -96,9 +96,44 @@ insert into roles_clientes VALUES('CP', 'Cuenta personal');
 select * from roles_clientes;
 
 /*============TABLA CLIENTES==================================================*/
-
-insert into clientes values('password', 'ede96yona@gmail.com', 'Yonathan Ortiz', 'M',75641557, 'yona', 'CP','on', '055384768');
-insert into clientes values('password', 'educativo@gmail.com', 'Centro escolar X', 'I',75641557, 'docente', 'IEDU','on', '123456709');
+--LLAMADO AL ADD CLIENTES
+DECLARE
+    param_clave clientes.cliente_clave%type := 'martinez';
+   param_correo clientes.cliente_correo%type := 'salva@gmail.com';
+    param_nombre clientes.cliente_nombre%type := 'salvador martinez';
+   param_sexo clientes.cliente_sexo%type := 'm';
+    param_telefono clientes.cliente_telefono%type := '74968945';
+   param_user clientes.cliente_user%type := 'azucar24';
+   param_rol clientes.cliente_rol_id%type := 'CP';
+   param_estado clientes.cliente_estado%type := 'on';
+   param_dui clientes.cliente_dui%type := '052081117';
+   param_null varchar(200) := null;
+BEGIN
+    CREAR_CLIENTE( param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,  param_dui, param_null);
+END;
+--LLAMADO AL DELETE CLIENTES
+DECLARE
+    cliente_dui clientes.cliente_dui%type := '052081117';
+    param_null varchar(200) := null;
+BEGIN
+    DELETE_CLIENTE(cliente_dui, param_null);
+END;
+select * from clientes;
+--LLAMADO AL UPDATE
+DECLARE
+     param_clave clientes.cliente_clave%type := 'martinez2412';
+   param_correo clientes.cliente_correo%type := 'salva@gmail.com';
+    param_nombre clientes.cliente_nombre%type := 'salvador martinez';
+   param_sexo clientes.cliente_sexo%type := 'm';
+    param_telefono clientes.cliente_telefono%type := '74968945';
+   param_user clientes.cliente_user%type := 'azucar24';
+      param_rol clientes.cliente_rol_id%type := 'IEDU';
+   param_estado clientes.cliente_estado%type := 'on';
+   param_dui clientes.cliente_dui%type := '052081117';
+    param_null varchar(200) := null;
+BEGIN
+    UDP_CLIENTE(param_clave, param_correo, param_nombre, param_sexo, param_telefono, param_user, param_rol, param_estado,   param_dui, param_null);
+END;
 select * from clientes;
 select roles_clientes.rol_name, clientes.cliente_nombre FROM clientes inner join roles_clientes on clientes.cliente_rol_id=roles_clientes.rol_code;
 /*============TABLA RECURSOS FISICOS==================================================*/
